@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+</body>
+<script>
+    /*concat()   连接数组*/
+    var arr1 = ["1sfs","-1fs"];
+    var arr2 = ["11","22"];
+    var arr3 = arr1.concat(arr2);
+    console.log(arr3);
+
+    /*join()   连接数组*/
+    var join = arr3.join(".......");
+    console.log(join);
+
+    /*reverse()  颠倒数组*/
+    console.log(arr1.reverse());
+
+    /*splice() 方法可从已有的数组中返回选定的元素*/
+    var arr4 = ["小","李","金","珂"];
+    var slice = arr4.splice(2,1);
+    console.log("slice========"+slice);
+    console.log(arr4);
+
+    /*sort()   数组排序*/
+    var arr5= ["100","60","10","20","1","-2"];
+    var sort = arr5.sort();   //无法实现从低到高
+    console.log(sort);
+    /*使用这个函数可以实现*/
+    function sortNum(a,b){
+        return a - b;
+    }
+    var sort1 = arr5.sort(sortNum);
+    console.log(sort1);
+
+
+</script>
+</html>

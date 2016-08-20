@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图片上传练习</title>
+    <style>
+        *{
+            font-family: "Microsoft YaHei";
+        }
+        #upload{
+            display: block;
+            border:1px solid;
+            text-align: center;
+            margin: 0 auto;
+            border-radius: 3px;
+            padding: 5px;
+        }
+        a{
+            text-underline: none;
+            text-decoration: none;
+            color:#444;
+            font-size: 20px;
+        }
+        input[type='file']{
+            display: none;
+        }
+        progress{
+            display: block;
+            margin: 20px auto;
+        }
+        #show-image{
+            text-align: center;
+        }
+        .image-list{
+            width: 300px;
+            height:300px;
+            border:1px solid #444;
+            overflow: hidden;
+            display: inline-block;
+            margin-right: 20px;
+        }
+        .image-list>div{
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+        }
+        .image-list>div>img{
+            width: 100%;
+        }
+        .image-list span{
+            display: block;
+            line-height: 50px;
+            background-color: #444;
+            color:#FFF;
+            text-shadow: 1px 1px 1px rgba(255,255,255,0.5);
+        }
+    </style>
+</head>
+<body>
+<input type="file" accept="image/*" multiple id="choose">
+<a href="javascript:;" id="upload">上传图片</a>
+<h2 style="text-align: center">性感的进度条</h2><progress id="progress" value="0" max="100"></progress> <h5 style="text-align: center;
+"></h5>     <!--进度条-->
+<div id="show-image"></div>
+</body>
+<script src="jquery-1.11.3.js"></script>
+<script>
+    $(function(){
+        var filechooser = document.getElementById("choose");
+        $("#upload").click(function(){       //上传图片点击相当于上传按钮点击
+            filechooser.click();
+        });
+
+        filechooser.onchange =  function(){
+            $("#progress").val("0").next().text('');
+            //如果图片不存在
+            if( !this.files.length ){
+                return;
+            }
+//            alert(this.files[0].type);
+   //         alert(this.files[0].size/1024);        //文件大小  B为单位
+            var files = Array.prototype.slice.call(this.files);
+
+            //图片个数
+            if(files.length>3){
+                alert("图片过多");
+                return
+            }
+
+            files.forEach(function(file,i){
+                //只能为jpeg png  gif
+                var req = /\/(?:jpeg|png|gif)/i;
+                var check = req.test(file.type);
+                if(!check){
+                    alert("图片格式不支持！");
+                    return;
+                }
+                var div  = $("<div class='image-list'><div><img src=''/></div><span style='text-align: center'></span></div>");
+                var reader = new FileReader();
+                var size =file.size/1024>1024? (~~(10*file.size/1024/1024))/10+"MB":~~(file.size/1024) +"KB";      // ~~向下取整
+                $("#show-image").append(div);
+                reader.onloadstart = function(){
+                    $("#progress").next().text("开始读取");
+                };
+                reader.onprogress=function(){
+                    $("#progress").next().text("读取中");
+                    console.log("读取时触发");
+                };
+                reader.onerror = function(){
+                    $("#progress").next().text("读取失败");
+                    console.log("出错时触发");
+                };
+
+                reader.onload=function(){
+                    console.log("读取成功时触发");
+                    $("#progress").val("100").next().text("读取成功");
+                    var result = this.result;        //读取失败时  null   否则就是读取的结果
+                    var img = new Image();
+                    img.src= result;
+                    div.find("img").attr("src",result);
+                    div.find("span").html(size);
+                };
+                reader.readAsDataURL(file);         //转换成base64
+            })
+
+
+        }
+    })
+</script>
+</html>

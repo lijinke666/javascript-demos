@@ -1,0 +1,48 @@
+<!DOCTYPE  HTML>
+<html >
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>系好安全带,准备启航</title>
+
+    <script type="text/javascript">
+
+        //通过javascript的日期对象来得到当前的日期，并输出。
+        var date = new Date();
+        var year = date.getFullYear();
+        var month = date.getMonth()+1;
+        var day = date.getDate();
+        var hour =date.getHours();
+        var minute = date.getMinutes();
+        var second = date.getSeconds();
+
+
+
+
+
+
+        //成绩是一长窜的字符串不好处理，找规律后分割放到数组里更好操作哦
+        var scoreStr = "小明:87;小花:81;小红:97;小天:76;小张:74;小小:94;小西:90;小伍:76;小迪:64;小曼:76";
+        var score = scoreStr.split(";");
+        console.log(score);
+        var int=null;
+        var length = score.length;
+        for(var i=0; i<score.length; i++){
+            var people = score[i].split(":").pop();
+            int += parseInt(people);
+        }
+        var meanValue = parseInt(int/length);
+        document.write("今天是:"+year+"年/"+month+"月/"+day+"日"+"星期"+day+"  "+hour+":"+minute+":"+second+"  "+"平均数是:"+meanValue);
+
+
+
+
+
+        //从数组中将成绩撮出来，然后求和取整，并输出。
+
+
+
+    </script>
+</head>
+<body>
+</body>
+</html>

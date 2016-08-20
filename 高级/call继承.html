@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>call继承</title>
+</head>
+<body>
+
+</body>
+<script>
+    function add( a, b ){
+        alert(a+b);
+    }
+    function sub( a, b ){
+        alert(a-b);
+    }
+    add.call(sub,5,1)
+
+    function sayName( name ){
+        this.name = name;
+        this.say = function(){
+            alert(this.name);
+        }
+    }
+
+    function aa( name ,a, b ){
+        sayName.call(this,name);        //继承sayName函数  让aa函数也有say方法  第二个参数是 函数的参数
+        add.apply(this,[a,b])         //apply 第二个参数是数组的方式传递参数
+    }
+
+    var bb = new aa('李金珂',1,3);
+    bb.say();
+
+    (function(){
+        var ljk = function (){
+
+        };
+        ljk.prototype = {
+          sayName:function( name ){
+              this.say = function(){
+                  alert(name);
+              };
+              this.say();
+          },
+          aa:function(name){
+              this.sayName.call(this.aa,name);
+          }
+        };
+        window['ljk'] = ljk;
+    })();
+        var ljk = new ljk();
+        ljk.sayName('赵日天');
+        ljk.aa('董小姐')
+</script>
+</html>

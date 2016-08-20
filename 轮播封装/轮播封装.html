@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>封装练习</title>
+
+</head>
+<body>
+<div id="box">
+    <ul>
+        <li><img src="../../css3/1.jpg" alt=""></li>
+        <li><img src="../../css3/2.jpg" alt=""></li>
+        <li><img src="../../css3/milk.jpg" alt=""></li>
+    </ul>
+</div>
+<div id="box1">
+    <ul>
+        <li><img src="../../css3/milk.jpg" alt=""></li>
+        <li><img src="../../css3/milk.jpg" alt=""></li>
+        <li><img src="../../css3/milk.jpg" alt=""></li>
+    </ul>
+</div>
+</body>
+<script src="../jquery-1.11.3.js"></script>
+<script>
+    (function($){
+        $.fn.move = function(options){
+            var defaluts ={
+                width:280,
+                height:250,
+                moveTime:0.5,
+                setTime:3000,
+                fangxiang:"left"
+            };
+            var m = $(this);
+            var options=$.extend(defaluts,options);
+            m.css({
+                width:options.width+"px",
+                height:options.height+"px",
+                overflow:"hidden",
+                position:"relative",
+                margin:"0 auto"
+            });
+            m.find("li").css({
+                width:options.width+"px",
+                height:options.height+"px",
+                float:"left",
+                listStyleType:"none"
+            });
+            m.find("img").css({
+                width:options.width+"px",
+                height:options.height+"px"
+            })
+            var liLength=this.find("li").length,
+                    liWidth=this.find("li").width();
+            m.find("ul").css({
+                width:liLength*liWidth+"px",
+                height:options.height+"px",
+                position:"absolute",
+                left:0,
+                top:0,
+                transition:"all "+options.moveTime+"s cubic-bezier(.82,-0.81,.64,.29)"
+            });
+            var i=0;
+            var set =setInterval(function(){
+                if(options.fangxiang=="left"){
+                    if(i== m.find("li").length-1){
+                        i=0;
+                    }else{
+                        i++;
+                    }
+                }else{
+                    if(i==0){
+                        i= m.find("li").length-1;
+                    }else{
+                        i--;
+                    }
+                }
+                m.find("ul").css({
+                    transform:"translate3d(-"+options.width*i+"px,0,0)"
+                })
+            },options.setTime)
+        }
+    })(jQuery);
+    $(function(){
+        $("#box").move();
+        $("#box1").move({
+            width:800,
+            height:650,
+            moveTime:2,
+            setTime:5000,
+            fangxiang:"left"
+        });
+    })
+</script>
+</html>

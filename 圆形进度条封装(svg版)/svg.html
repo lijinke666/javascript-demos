@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        .display-box{display: -webkit-box; display: -moz-box; display: -ms-box; display: box; -webkit-box-orient: horizontal; -moz-box-orient: horizontal; -ms-box-orient: horizontal; box-orient: horizontal; -webkit-box-pack: center; -moz-box-pack: center; -ms-box-pack: center; box-pack: center; -webkit-box-align: center; -moz-box-align: center; -ms-box-align: center; box-align: center;}
+        .none{ list-style: none;}
+        .text-center{ text-align: center;}
+        .property-info { padding: 1.8rem 1.2rem; border-bottom: 1px solid #eee; }
+        .property-info  .rate, .property-info .day, .property-info  .money { margin-right: 0.45rem; }
+        .property-info  .bg-yellow { background-color: #FBF7E1; }
+        .property-info  .bg-white { background-color: #FFF; border-bottom-color: #FFF !important; }
+        .property-info  .bg-grey { background-color: #F2F2F2; }
+        .property-info  svg circle { -moz-transition: stroke-dasharray 0.6s cubic-bezier(0.59, -0.74, 0.13, 0.48); -webkit-transition: stroke-dasharray 0.6s cubic-bezier(0.59, -0.74, 0.13, 0.48); transition: stroke-dasharray 0.6s cubic-bezier(0.59, -0.74, 0.13, 0.48); -moz-transform: matrix(0, -1, 1, 0, 0, 80); -webkit-transform: matrix(0, -1, 1, 0, 0, 80); transform: matrix(0, -1, 1, 0, 0, 80); stroke-width: 3px; }
+        .property-info  li { padding: 0.8rem 0.6rem; position: relative; }
+        .property-info  li em { top: 50%; left: 50%; -moz-transform: translate(-50%, -60%); -webkit-transform: translate(-50%, -60%); transform: translate(-50%, -60%); position: absolute; font-style: normal; }
+        .property-info  .stroke-bg-red { stroke: #fdcfcb; }
+        .property-info  .stroke-red { stroke: #f9655a; }
+        .property-info  .stroke-bg-green { stroke: #d7edd7; }
+        .property-info .stroke-green { stroke: #7FC57F; }
+        .property-info .investment-title { margin-bottom: 1rem; }
+        .property-info .investment-bar { width: 63%; height: 1rem; position: relative; background-color: #d6ecff; margin-right: 1rem; }
+        .property-info .investment-bar > span { position: absolute; top: 0; left: 0; height: 100%; display: inline-block; background-color: #99d1ff; }
+    </style>
+</head>
+<body>
+    <ul class="none display-box property-info">
+        <li class="text-center bg-white">
+            <svg width="80" height="80" data-circle="0.5" class="rotate">
+                <circle cx="40" cy="40" r="36" fill="none" class="stroke-bg-green" ></circle>
+                <circle cx="40" cy="40" r="36" fill="none" class="stroke-green"  stroke-dasharray="0 1000"></circle>
+            </svg>
+            <em class="deep-black">投资中</em>
+        </li>
+        <li class="text-center bg-white">
+            <svg width="80" height="80" data-circle="0.7" class="rotate">
+                <circle cx="40" cy="40" r="36" fill="none" class="stroke-bg-red"></circle>
+                <circle cx="40" cy="40" r="36" fill="none" class="stroke-red" stroke-dasharray="0 1000"></circle>
+            </svg>
+            <em class="deep-black">投资中</em>
+        </li>
+    </ul>
+</body>
+<script src="../jquery-1.11.3.js"></script>
+<script>
+    (function($){
+        var svgRotate = function( element ){
+            var ele = element.find("circle:last"),
+                c =  element.data("circle"),
+                r = element.find("circle").attr("r");
+                this.rotateCircle(ele,c,r );
+        };
+        svgRotate.prototype = {
+            rotateCircle:function( ele ,value ,r ){
+                var percent = value,
+                    perimeter = Math.PI * 2　* r;
+                ele.attr("stroke-dasharray", perimeter * percent + " " + perimeter * (1- percent) )
+            }
+        };
+        svgRotate.init = function( element ){
+            var _this = this;
+            element.each(function(){
+                new _this( $(this) );
+            })
+        };
+        window['svgRotate'] = svgRotate;
+    })(jQuery);
+    $(function(){
+        svgRotate.init($(".rotate"));
+    })
+</script>
+</html>

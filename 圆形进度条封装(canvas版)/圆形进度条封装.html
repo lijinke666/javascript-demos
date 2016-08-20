@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no"/>
+    <title>绘制圆形</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #box{
+            position: absolute;
+            top:50%;
+            left:50%;
+            transform: translate(-50%,-50%);
+        }
+        .dd{
+            float:left;
+        }
+    </style>
+</head>
+<body>
+<div id="box">
+    <div class="dd">
+        <canvas class="canvas" data-setting='{"rotate":"0.8","text":"投资中","bgColor":"#FFDCDA","color":"#F9655A","time":8}'></canvas>
+    </div>
+    <div class="dd">
+        <canvas class="canvas" data-setting='{"rotate":"0.5","text":"收益中","bgColor":"#D8FFD8","color":"#6ED4AC","time":15}'></canvas>
+    </div>
+    <div class="dd">
+        <canvas class="canvas" data-setting='{"rotate":"1","text":"审核中","bgColor":"#62c9ff","color":"#C298D2","time":20}'></canvas>
+    </div>
+</div>
+
+
+</body>
+<script src="../jquery-1.11.3.js"></script>
+<script>
+    $(function(){
+        ljkRotate.init($(".dd"));
+    });
+
+    //第一种
+    (function($){
+        var _t;
+        var ljkRotate = function(element){
+            var settings = element.find("canvas").data("setting"),
+                rotate = settings.rotate,
+                text= settings.text,
+                bgColor= settings.bgColor,
+                color = settings.color,
+                node = element.find("canvas").get(0),
+                time=settings.time ? settings.time :20;
+                this.loadCanvas(node,rotate,text,bgColor,color,time);
+               _t = this;
+        };
+        ljkRotate.prototype = {
+            draw:function(node,rotate,text,bgColor,color){
+                var canvas = node;
+                canvas.width = 130;
+                canvas.height = 130;
+                var ljk = canvas.getContext("2d");
+                ljk.clearRect(0,0,canvas.width,canvas.height);
+                ljk.save();
+                ljk.beginPath();
+                ljk.arc(70,70,50,0,Math.PI*2,false);
+                ljk.lineWidth=8;
+                ljk.strokeStyle=bgColor;
+                ljk.stroke();
+                ljk.closePath();
+                //文字
+                ljk.font="14px Microsoft YaHei";
+                ljk.textAlign="center";
+                ljk.fillText(text+(rotate.toFixed(2))+"%",72,75);
+
+
+                //进度条
+                ljk.beginPath();
+                ljk.strokeStyle=color;
+                ljk.lineWidth=8;
+                ljk.arc(70,70,50,-(Math.PI/2),(Math.PI*2*rotate) - (Math.PI/2) ,false);
+                ljk.stroke();
+                ljk.restore();
+            },
+            loadCanvas:function(node,thisRotate,text,bgColor,color,time){
+                var rotate=0;
+                var r = setInterval(function(){
+                    if(rotate>thisRotate){
+                        clearInterval(r);
+                    }else{
+                        rotate += 0.01;
+                        _t.draw(node,rotate,text,bgColor,color);
+
+                    }
+                },time)
+            }
+        };
+        ljkRotate.init = function(element){
+            var _this_ = this;
+            element.each(function(){
+                new _this_($(this));
+            })
+        };
+        window['ljkRotate'] = ljkRotate;
+    })(jQuery);
+
+
+    //第二种
+//    window.onload=function(){
+//        var ljkCanvas = function ljkCanvas(node,thisRotate,text,bgColor,color){
+//            var canvas = node;
+//            canvas.width = 150;
+//            canvas.height = 150;
+//            var ljk = canvas.getContext("2d");
+//
+//            var rotate=0;
+//            loadCanvas(thisRotate,text,bgColor,color);
+//
+//            function draw(rotate,text,bgColor,color){
+//                this.text = text;
+//                this.rotate = rotate;
+//                this.bgColor = bgColor;
+//                this.color = color;
+//                ljk.clearRect(0,0,canvas.width,canvas.height);
+//                ljk.save();
+//                ljk.beginPath();
+//                ljk.arc(70,70,50,0,Math.PI*2,false);
+//                ljk.lineWidth=8;
+//                ljk.strokeStyle=this.bgColor;
+//                ljk.stroke();
+//                //文字
+//                ljk.font="16px Microsoft YaHei";
+//                ljk.fillText(this.text,45,75);
+//                ljk.textAlign="center";
+//                ljk.textBaseline="middle";
+//
+//                //进度条
+//                ljk.beginPath();
+//                ljk.strokeStyle=this.color;
+//                ljk.lineWidth=8;
+//                ljk.arc(70,70,50,-(Math.PI/2),(Math.PI*2*this.rotate) - (Math.PI/2) ,false);
+//                ljk.stroke();
+//                ljk.restore();
+//            }
+//
+//
+//            function loadCanvas(thisRotate,text,bgColor,color){
+//                var r = setInterval(function(){
+//                    if(rotate>thisRotate){
+//                        clearInterval(r);
+//                    }else{
+//                        draw(rotate,text,bgColor,color);
+//                        rotate += 0.02;
+//                    }
+//                },20)
+//            }
+//        };
+//
+//
+//        $(".dd").each(function(){
+//            var node = $(this).find('canvas').get(0);
+//            var settings=$(this).find("canvas").data("setting");
+//            new ljkCanvas(node,settings.rotate ,settings.text ,settings.bgColor , settings.color);
+//        })
+//    }
+
+</script>
+</html>

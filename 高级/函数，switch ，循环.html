@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+    function fn(){         //函数声明
+
+    }
+
+    var fun1 = function fun(){       //函数表达式
+
+        return true;
+    }
+
+
+    //switch循环
+    var val=2;
+    switch (val){
+        case 1:
+            console.log(111);
+            break;
+        case 2:
+            console.log(222);
+            break;
+        case 3:
+            console.log(333);
+            break;
+        case 4:
+            console.log(444);
+            break;
+        default:
+            console.log(555);
+
+    }
+    //with  循环
+
+    //严格模式  'user strict'
+    !function(){
+        x = 1;       //如果不声明 x 全局变量
+        console.log(window.x);
+    }
+    //如果使用严格模式
+    'user strict'   //安全性更高
+
+</script>
+</html>

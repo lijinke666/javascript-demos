@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<h2>操作成功</h2>
+<span id="time"></span>
+<a href="#" id="go">返回</a>
+</body>
+<script>
+    var time= document.getElementById("time");
+    var s= 5;
+     setInterval(function(){
+         if(s==0){
+             location.href="http://www.baidu.com";
+         }
+         s--;
+         time.innerHTML= s +"s后自动跳转"
+     },1000);
+    var go = document.getElementById("go");
+    go.onclick=function(){
+        window.history.back();
+    }
+</script>
+</html>

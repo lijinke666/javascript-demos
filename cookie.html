@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>cookie</title>
+    <style>
+        body{
+            font-family: "Microsoft YaHei", Arial;
+        }
+        div{
+            float:left;
+            width: 200px;
+            height: 50px;
+            text-align: center;
+            line-height: 50px;
+            color:#FFF;
+        }
+        .red{
+            background: #ff696e;
+            margin-right:10px;
+        }
+        .green{
+            background: #1f8060;
+        }
+    </style>
+</head>
+<body>
+<div class="red bg">红</div>
+<div class="green bg">绿</div>
+</body>
+<script>
+    window.onload=function(){
+        var background = document.cookie.split("=").pop();
+        if( background==""){
+            document.body.style.backgroundColor="#FFF";
+        }else{
+            document.body.style.backgroundColor=background;
+        }
+        var bg = document.getElementsByClassName("bg");
+        for(var i=0; i<bg.length; i++){
+            bg[i].onclick=function(){
+                var color = this.getAttribute("class");
+                if(color.indexOf("red")>-1){
+                    document.body.style.backgroundColor="#ff696e";
+                    document.cookie="bgColor=#ff696e";
+                }else{
+                    document.body.style.backgroundColor="#1f8060";
+                    document.cookie="bgColor=#1f8060";
+                }
+            }
+        }
+    }
+</script>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>类型检测</title>
+</head>
+<body>
+</body>
+<script>
+    //typeof   适合基本类型 ,function
+    var str = "123456";
+    console.log(typeof str);   //string
+
+    function stt(){};
+    console.log(typeof stt);        //function
+    alert(typeof object);
+
+
+    //instanceof  判断对象类型   适合自定义对象
+    var obj = [1,2];
+    var str1 = "123";
+    console.log(obj instanceof Array);     //true           //obj是一个数组  它的原型链就是Array本身
+    console.log(str1 instanceof Array);    //false
+
+
+
+    //Object.prototype.toString.apply()       一般用来判断是不是数组
+   console.log(  Object.prototype.toString.apply([])  );     //[Object,Array]
+   console.log(  Object.prototype.toString.apply("123")  );     //[Object,String]
+   console.log(  Object.prototype.toString.apply(null)  );     //[Object,Null]         IE 7/8/9 返回[Object,Object]
+
+    //编程练习
+    function arraysSimilar(arr1, arr2){
+       var arr11= arr1 instanceof Array;
+       var arr22= arr2 instanceof Array;
+       console.log(arr11);
+       console.log(arr22);
+        if(arr11==true && arr22==true){
+            var a=arr1.sort();
+            var b=arr2.sort();
+            console.log("排序后的a数组"+a);
+            console.log("排序后的b数组"+b);
+            var len = a.length> b.length ? b.length : a.length;
+            console.log("lenth=="+len);
+            for(var i=0; i< len; i++){
+                var typea = typeof a[i];
+                var typeb = typeof b[i];
+                console.log("a数组第"+i+"个"+typea);
+                console.log("b数组第"+i+"个"+typeb);
+                if(typea===typeb){
+                    return "判定结果：相似";
+                }
+            }
+        }else{
+        	console.log("不是数组");
+            return "不是数组我给你说个锤子";
+        }
+    }
+
+    var a=["找","ab",false];
+    var b=[true,"一","二"];
+   var arrar= arraysSimilar(a,b);
+   alert(arrar);
+
+</script>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>鼠标拖拽效果</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            font-family: 'Microsoft YaHei';
+        }
+        #content{
+            width:400px;
+            border:1px solid #444;
+            position: absolute;
+            left:0;
+            top:0;
+            z-index: 999;
+            height: auto;
+            -moz-user-select:none;      /*禁止选中*/
+
+            -webkit-user-select:none;
+
+            user-select:none;
+        }
+        #content-title{
+            height: 60px;
+            line-height: 60px;
+            border-bottom:1px solid #444;
+            background-color: #f4f4f4;
+            text-align: center;
+            cursor: move;
+        }
+        #content-box{
+            height: 350px;
+            background-color: #FFF;
+        }
+        #mask{
+            background-color: rgba(0,0,0,.5);
+            position: fixed;
+            z-index: 888;
+        }
+    </style>
+</head>
+<body>
+<div id="content">
+    <div id="content-title">鼠标拖拽练习</div>
+    <div id="content-box"></div>
+</div>
+<div id="mask"></div>
+</body>
+
+<script>
+    //获取id
+    function $( id ){
+        return document.getElementById(id);
+    }
+    autoCenter($("content"));
+    //垂直水平居中
+    function autoCenter( ele ){
+        var bodyWidth = document.documentElement.clientWidth,
+            bodyHeight = document.documentElement.clientHeight;
+        var offsetLeft = ele.offsetWidth,
+            offsetTop = ele.offsetHeight;
+        ele.style.left = (bodyWidth-offsetLeft) /2+"px";
+        ele.style.top = (bodyHeight-offsetTop) /2+"px";
+    }
+
+    //蒙版全屏
+    mask($("mask"));
+    function mask( ele ){
+        ele.style.width = document.documentElement.clientWidth+"px";
+        ele.style.height = document.documentElement.clientHeight+"px";
+    }
+
+    //鼠标拖动
+    var mouseOffsetX = 0;    //鼠标相对x坐标
+    var mouseOffsetY = 0;    //鼠标相对y坐标
+    var isMove = false;      //是否能拖动
+    $("content").addEventListener("mousedown",function(e){
+        var ee = e || window.event;
+        var content = $("content");
+        mouseOffsetX = ee.pageX - content.offsetLeft;
+        mouseOffsetY = ee.pageY - content.offsetTop;
+        isMove = true;
+    });
+    $("content").onmousemove= function(e){
+        var ee = e || window.event;
+        var mouseX  =  ee.pageX;
+        var mouseY  =  ee.pageY;
+        var moveX = 0;
+        var moveY = 0;
+        if( isMove===true ){
+            var content = $("content");
+            //获取当前鼠标的坐标
+            moveX = mouseX - mouseOffsetX;        //当前鼠标的坐标减去 上次的偏移
+            moveY = mouseY - mouseOffsetY;
+
+
+            //范围限定
+            var pageWidth = document.documentElement.clientWidth ;//页面最大宽度
+            var pageHeight = document.documentElement.clientHeight ;//页面最大高度
+            var maxMoveX = pageWidth - content.offsetWidth;
+            var maxMoveY = pageHeight - content.offsetHeight;
+
+            maxMoveX = Math.min(maxMoveX,Math.max(0,moveX));
+            maxMoveY = Math.min(maxMoveY,Math.max(0,moveY));
+            content.style.top = maxMoveY +"px";
+            content.style.left =maxMoveX +"px";
+
+        }
+    };
+    $("content").onmouseup = function(e){
+        var ee = e || window.event;
+        ee.preventDefault()
+        isMove = false;
+    }
+</script>
+</html>

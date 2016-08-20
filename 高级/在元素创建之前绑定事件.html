@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        ul li{
+            font-size: 50px;
+            list-style: none;
+            text-align: center;
+            border:1px solid #396;
+        }
+        button{
+            padding:5px 30px;
+            display: block;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+<ul>
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+    <li>5</li>
+</ul>
+<button>生成li</button><button>事件委托</button>
+</body>
+<script src="../jquery-1.10.2.min.js"></script>
+<script>
+    $(function(){
+        $("button:eq(1)").on("click",function(){
+                    $("ul").on("click","li",function(){
+                      alert($(this).text());
+        });
+        });
+
+     $("li").on("click",function(){
+            alert($(this).text());
+        })
+        $("button:eq(0)").on("click",function(){
+            var num = parseInt($("li").length);
+            var li = $("<li>"+parseInt(num+1)+"新产生的li节点不会有点击事件</li>");
+            $("ul").append(li);
+        })
+    });
+</script>
+</html>

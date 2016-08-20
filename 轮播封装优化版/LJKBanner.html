@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="LJKBanner.css">
+</head>
+<body>
+<!--轮播图-->
+<div class="banner">
+    <div class="banner-wrap">
+        <ul class="clearListStyle banner-move">
+            <li class="item">
+                <a href="javascript:;"><img src="images/banner1.jpg" alt="名师1对1"></a>
+            </li>
+            <li class="item">
+                <a href="javascript:;"><img src="images/banner2.jpg" alt="在线上课"></a>
+            </li>
+            <li class="item">
+                <a href="javascript:;"><img src="images/banner5.jpg" alt="名师1对1"></a>
+            </li>
+            <li class="item">
+                <a href="javascript:;"><img src="images/banner3.jpg" alt="体验课"></a>
+            </li>
+            <li class="item">
+                <a href="javascript:;"><img src="images/banner4.jpg" alt="1对1辅导"></a>
+            </li>
+        </ul>
+    </div>
+    <div class="banner-list"></div>
+    <div class="container arrow-box">
+        <a href="javascript:;" class="arrow left-arrow"><img src="images/left-arrow.png" alt="" ></a>
+        <a href="javascript:;" class="arrow right-arrow"><img src="images/right-arrow.png" alt="" ></a>
+    </div>
+</div>
+</body>
+<script src="../jquery-1.11.3.js"></script>
+<script src="LJKBanner.js"></script>
+<script>
+    var LJKBanner = new LJKBanner($(".banner"),{
+        time:5000,
+        isCreateEqList:true
+    });
+</script>
+</html>

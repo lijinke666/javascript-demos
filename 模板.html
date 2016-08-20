@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Js实现模板</title>
+    <style>
+        body{
+            font-size: 30px;
+        }
+    </style>
+</head>
+<body>
+<!--<p>你好{str}</p>-->
+<div>hello! { str11 }</div>
+</body>
+<script>
+    window.onload=function(){
+        function temp(str,change){
+            var newStr = str.replace(/\{\s*(\w+)\s*\}/g,change);//          \s匹配空格  *0个或多个    \w匹配单词   +至少一个或多个     g全局匹配
+            return console.log(newStr);
+        }
+
+        var str = "hello{ str }";
+        temp(str,"李金珂");
+
+
+        function temp2(change){
+            var newStr = document.body.innerHTML.replace(/\{\s*(\w+)\s*\}/g,change);
+            document.body.innerHTML=newStr;
+        }
+        temp2('世界');
+
+    }
+
+</script>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>楼层定位</title>
+    <style>
+        body{
+            font-family: "Microsoft YaHei";
+        }
+        section{
+            width: 800px;
+            height: 600px;
+            border:1px solid #444;
+            margin-bottom: 30px;
+        }
+        h2{
+            font-weight: 300;
+        }
+        .nav{
+            position: fixed;
+            right:200px;
+            top:200px;
+            border:1px solid #dcdcdc;
+        }
+        ul li{
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+        }
+        ul{
+            margin: 0;
+            padding: 0;
+        }
+        li{
+            width: 100px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+        }
+        a{
+            display: block;
+            text-decoration: none;
+            color:#444;
+            transition:background-color,color .2s linear;
+        }
+        .bg{
+            background-color: #396;
+            color:#FFF;
+        }
+    </style>
+</head>
+<body>
+<section class="floor" id="floor1"><h2>第一楼</h2></section>
+<section class="floor" id="floor2"><h2>第二楼</h2></section>
+<section class="floor" id="floor3"><h2>第三楼</h2></section>
+<section class="floor" id="floor4"><h2>第四楼</h2></section>
+<section class="floor" id="floor5"><h2>第五楼</h2></section>
+<ul class="nav">
+    <li><a href="#floor1" class="scroll_floor">第一楼</a></li>
+    <li><a href="#floor2" class="scroll_floor">第二楼</a></li>
+    <li><a href="#floor3" class="scroll_floor">第三楼</a></li>
+    <li><a href="#floor4" class="scroll_floor">第四楼</a></li>
+    <li><a href="#floor5" class="scroll_floor">第五楼</a></li>
+</ul>
+</body>
+<script src="jquery-1.11.3.js"></script>
+<script>
+    $(function(){
+        $(window).on('scroll',function(){
+            var scrollTop = $(document).scrollTop();
+            var floorid = "";
+            $(".floor").each(function(){
+                var $this = $(this);
+                var offsetTop = $this.offset().top;
+                if(scrollTop >= offsetTop -100){
+                    floorid = "#"+ $this.attr('id');
+                }else{
+                    return false;
+                }
+            });
+
+            $('.scroll_floor').each(function(){
+                var $this = $(this);
+                var href = $this.attr('href');
+                if(href ==  floorid){
+                    $this.addClass("bg");
+                }else{
+                    $this.removeClass("bg");
+                }
+            });
+        }).scroll();
+    })
+</script>
+</html>
