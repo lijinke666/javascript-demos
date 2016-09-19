@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .div{
+            width: 250px;
+            height: 3em;
+            border:1px solid red;
+            margin: 1em;
+        }
+        .div p{
+            margin: 0;
+            line-height: 1.5em;
+        }
+    </style>
+</head>
+<body>
+<div class="div">
+    <p>
+        We need a friend but I don't need an enemy Because I don't like this
+    </p>
+</div>
+</body>
+<script src="jquery-1.11.3.js"></script>
+<script>
+    $(function(){
+        var $divH = $('.div').height();
+        var $p = $(".div p");
+        console.log($divH);
+        console.log($p);
+
+        if($p.outerHeight() >= $divH){
+            $p.text($p.text().replace(/\w\s/,'艹'))
+        }
+    })
+</script>
+</html>

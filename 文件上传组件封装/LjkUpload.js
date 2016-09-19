@@ -167,6 +167,7 @@
                 //ES6中可以写成  Array.from(obj);
                 var files = Array.prototype.slice.call( this.files );
 
+
                 files.forEach( function ( file, i ) {
                     //jpeg png gif    "/images/jpeg"     i对大小写不敏感
                     var fileType =  options.isImage ? /\/(?:jpeg|png|gif)/i : /\/(?:mp4|rmvb|mp4|wmv|rm|3gp)/i;          //图片或者 视频
