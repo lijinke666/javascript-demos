@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>跟着阮一峰大神学闭包</title>
+</head>
+<body>
+</body>
+<script>
+//变量的作用域 1.全局变量   2.局部变量
+var n = 111;
+function a(){
+	console.log(n); //111          //这里能访问到函数外的 全局变量
+}
+a();
+
+// function b(){
+// 	var num =1 ;
+// }
+// console.log(num);        //not deifend  无法访问到函数内部的变量
+
+//要想访问到函数内部的局部变量
+function testa(){
+	var a = 11;
+	function testb(){               //通过在函数内部在  写一个函数的方式
+		console.log(a);    //11
+	}
+	return testb;
+}
+testa()();
+
+
+//小例子
+var name = "window";
+　　var object = {
+　　　　name : "object",
+　　　　getNameFunc : function(){
+　　　　　　return function(){
+　　　　　　　　return this.name;
+　　　　　　};
+　　　　}
+　　};
+　　alert(object.getNameFunc()());         //window        //调用object.getNameFunc()  时返回 function(){ return this.name    此时this的上下文是 function 也就是window  所以 this.name  应该是window.name ="window" }
+
+var name = "The Window";
+　　var object = {
+　　　　name : "My Object",
+　　　　getNameFunc : function(){
+　　　　　　var that = this;            //提前改变了this的指针  指向了  object
+　　　　　　return function(){
+　　　　　　　　return that.name;         //所以是 My Object
+　　　　　　};
+　　　　}
+　　};
+　　alert(object.getNameFunc()());        //object
+
+</script>
+</html>

@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>跟着阮一峰学继承的几种实现方式</title>
+</head>
+<body>
+</body>
+<script>
+//第一种   call()   或apply()
+function a(){
+	this.name = "李金珂"
+}
+function b( age, sex ){
+	a.call(this);       //b继承a的属性
+	this.age = age,
+	this.sex = sex;
+	this.sayName = function(){
+		alert(this.name);
+	}
+}
+var c = new b('哈哈哈',18,'男');
+c.sayName();       //李金珂
+
+
+//第二种  prototype 模式
+function aa(){
+	this.name = "赵日天";
+}
+function bb(){
+	this.sayName = function(){
+		alert(this.name);
+	}
+}
+bb.prototype = new aa();             //将bb 函数的prototype对象 指向 aa的实例    
+bb.prototype.constructor = bb;       //重新改变 prototype对象后  constructor指向 aa  所以要重新还原
+var cc = new bb();
+cc.sayName();           //赵日天
+</script>
+</html>
