@@ -54,5 +54,38 @@ var name = "The Window";
 　　};
 　　alert(object.getNameFunc()());        //object
 
+
+    //小例子2
+    //最简洁、直击要害的回答，分别有这么三句（版权属于 @张恂老师 ）：
+//
+//1、闭包是一个有状态（不消失的私有数据）的函数。
+//
+//2、闭包是一个有记忆的函数。
+//
+//3、闭包相当于一个只有一个方法的紧凑对象（a compact object）。
+
+    //普通函数  变量执行完就释放 会消失  无记忆
+    function add () {
+        var num =0;
+        return ++ num
+    }
+    for(let i=0; i<10; i++){
+      console.log(add())      //10次  1
+    }
+
+    //闭包函数 会记忆
+    function add2 () {
+        var num =0;
+        return function(){
+            return ++ num;
+        }
+    }
+    let add3 = add2();
+    for(let i= 0; i<10; i++){
+        console.log(add3());    //1 - 10
+    }
+
+
+
 </script>
 </html>
