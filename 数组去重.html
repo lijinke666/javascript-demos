@@ -12,6 +12,7 @@
 说明：至于如何对比，就是每次从原数组中取出一个元素，然后到对象中去访问这个属性，如果能访问到值，则说明重复。
 </body>
 <script>
+    //ES5
     Array.prototype.qucong = function(){
         var res = [];
         var json = {};
@@ -26,5 +27,10 @@
 
     var array = ['你好',1,1,2,2,'你好','gogo'];
     console.log(array.qucong());
+
+    //ES6
+    //new Set()  不能有重复元素的特性  然后Array.from 转成数组 完美:)
+    const qucong = (arr)=> Array.from(new Set(arr))
+    qucong([1,2,3,1,1,1,45])
 </script>
 </html>

@@ -68,6 +68,29 @@
 //        value.fartherwho();
     })
 
+    console.log('==========================')
+    //第四个例子
+    function Hi ( name ) {
+        this.name = name;
+    }
+    Hi.prototype.sayHi = function(){       //Hi  的原型声明一个sayHi方法
+        console.log(`你好${this.name}`)
+    }
+    let H = new Hi('李金科')
+
+
+    function Sex (sex) {
+        this.sex = sex;
+        Hi.call(this,arguments)          //继承 Hi  现在Sex就有 sayHi的方法了
+    }
+    Sex.prototype.saySex = function(){
+        console.log(`我是${this.sex}孩籽`)
+    }
+
+    let S = new Sex('男')
+    H.sayHi();     //你好，李金科
+    S.saySex();    //我是男孩子
+    S.sayHi();
 
 </script>
 </html>
