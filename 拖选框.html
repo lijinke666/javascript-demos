@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>拖选框</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body,
+    html {
+      height: 100%;
+    }
+    
+    body {
+      background: #ccc;
+    }
+    
+    #move {
+      border: 2px solid #396;
+      cursor: -webkit-grab;
+      position: absolute;
+      user-select: none;
+      transition: all cubic-bezier(0.075, 0.82, 0.165, 1) .5s;
+    }
+    
+    ul li {
+      list-style-type: none;
+    }
+    
+    .cursor-item {
+      width: 300px;
+      height: 300px;
+      position: relative
+    }
+    
+    .cursor-item li.cursor {
+      width: 20px;
+      height: 20px;
+      position: absolute;
+      border-radius: 50%;
+      background: -webkit-linear-gradient(top, #F63, #696);
+      cursor: ew-resize;
+    }
+    
+    .cursor-item li.cursor[data-value="lt"] {
+      left: -10px;
+      top: -10px;
+    }
+    
+    .cursor-item li.cursor[data-value="rt"] {
+      right: -10px;
+      top: -10px;
+    }
+    
+    .cursor-item li.cursor[data-value="ld"] {
+      left: -10px;
+      bottom: -10px;
+    }
+    
+    .cursor-item li.cursor[data-value="rd"] {
+      right: -10px;
+      bottom: -10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="move">
+    <ul class="cursor-item">
+      <li class="cursor" data-value="lt"></li>
+      <li class="cursor" data-value="rt"></li>
+      <li class="cursor" data-value="ld"></li>
+      <li class="cursor" data-value="rd"></li>
+    </ul>
+  </div>
+
+  <script>
+    var $ = function (element, all = false) { return all ? document.querySelectorAll(element) : document.querySelector(element) }
+    window.onload = () => {
+      move_init({
+        ele: $("#move"),
+        width: "300px",
+        height: "300px"
+      });
+      drop()
+    }
+    function drop() {
+      let isDown = false;
+      let items = Array.from($('.cursor', true));
+
+      let moveBox = $('#move')
+      let offsetX = 0;
+      let offsetY = 0;
+      let currenX = currenY = 0;
+      for (let i = 0, len = items.length; i < len; i++) {
+        items[i].addEventListener('mousedown', function (e) {
+          e.stopPropagation();
+          isDown = true;
+          offsetX = getThisMoueseXY(moveBox, e, offsetX, offsetY).offsetX;
+          offsetY = getThisMoueseXY(moveBox, e, offsetX, offsetY).offsetY;
+          // console.log(offsetX, offsetY)
+          currenX = ~~(e.pageX);
+          currenY = ~~ (e.pageY);
+        })
+        items[i].addEventListener('mousemove', function (e) {
+          e.stopPropagation();
+          let moveX = 0
+          let moveY = 0;
+          const type = this.getAttribute('data-value');
+          if (isDown === true) {
+            moveX = ~~(e.pageX- offsetX)
+            moveY = ~~(e.pageY - offsetY)
+            console.log(moveX)
+             if (e.pageX < currenX) { 
+               console.log("左") 
+               setMoveElementWH(moveBox,moveX ) 
+            }
+          }
+        })
+        items[i].addEventListener('mouseup', (e) => {
+          e.stopPropagation();
+          isDown = false;
+        })
+        items[i].addEventListener('mouseleave', (e) => {
+          e.preventDefault()
+          isDown = false;
+        })
+         mouseOutOrUp(items[i], isDown)
+      }
+    }
+
+    function move_init(config = {}) {
+      var deafultConfig = {
+        width: "100px",
+        height: "100px",
+        align: "center"
+      }
+      // var options = {
+      //   ...deafultConfig,
+      //   config
+      // }
+      var options = Object.assign({}, deafultConfig, config)
+      const {ele, align, width, height} = options;
+      ele.style.width = width;
+      ele.style.height = height;
+      align == "center" ? autoCenter(ele) : undefined
+      move(ele)
+    }
+
+    function move(ele) {
+      let isMove = false;
+      var offsetX = 0;
+      var offsetY = 0;
+      ele.addEventListener('mousedown', (e) => {
+        e.preventDefault()
+        isMove = true;
+        offsetX = getThisMoueseXY(ele, e, offsetX, offsetY).offsetX;
+        offsetY = getThisMoueseXY(ele, e, offsetX, offsetY).offsetY;
+      })
+
+      ele.addEventListener('mousemove', (e) => {
+        e.preventDefault()
+        var moveX = 0;
+        var moveY = 0;
+        if (isMove === true) {
+          moveX = e.pageX - offsetX;
+          moveY = e.pageY - offsetY;
+          setMoveElementOffset(ele, moveX, moveY)
+        }
+      })
+      mouseOutOrUp(ele,isMove)
+    }
+
+    //获取移动后的鼠标位置
+    function getThisMoueseXY(target, e, offsetX, offsetY) {
+      let {left, top} = getBounding(target)
+      offsetX = ~~(e.pageX - left);
+      offsetY = ~~(e.pageY - top);
+      return {
+        offsetX,
+        offsetY
+      }
+    }
+    //获取拖拽框的位置信息
+    function getBounding(ele) {
+      let { left, top, width, height } = ele.getBoundingClientRect();
+      return {
+        left,
+        top,
+        width,
+        height
+      }
+    }
+
+    //设置拖拽框的位置
+    function setMoveElementOffset(ele, left, top) {
+      ele.style.transform = `translate3d(${~~left}px,${~~top}px,0)`
+    }
+    //设置拖拽框的大小
+    function setMoveElementWH( ele,width,height ){
+      width && (ele.style.width = `${width}px`)
+      height && (ele.style.height = `${height}px`)
+    }
+    //垂直居中
+    function autoCenter(ele) {
+      let {clientWidth, clientHeight} = document.body;
+      let {width, height} = getBounding(ele)
+      let x = ~~((clientWidth - width) / 2)
+      let y = ~~((clientHeight - width) / 2)
+      setMoveElementOffset(ele, x, y)
+    }
+
+    //鼠标离开或弹起触发
+    function mouseOutOrUp(ele,flag) {
+      ele.addEventListener('mouseup', (e) => {
+        e.preventDefault()
+         e.stopPropagation();
+        flag = false;
+      })
+      ele.addEventListener('mouseleave', (e) => {
+        e.preventDefault()
+         e.stopPropagation();
+        flag = false;
+      })
+    }
+  </script>
+</body>
+
+</html>

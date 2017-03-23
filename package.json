@@ -1,0 +1,11 @@
+{
+  "name": "Javascript",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/lijinke666/Javascript.git",
+  "author": "jinke.li <jinke.li@feitian-tech.com>",
+  "license": "MIT",
+  "scripts": {
+    "start":"browser-sync start --server --files './*.html'"
+  }
+}
