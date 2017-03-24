@@ -19,7 +19,8 @@
     }
     
     body {
-      background: #ccc;
+      font-family: "Microsoft YaHei";
+      background: #ddd;
     }
     
     #move {
@@ -27,111 +28,122 @@
       cursor: -webkit-grab;
       position: absolute;
       user-select: none;
-      /*transition: all cubic-bezier(0.075, 0.82, 0.165, 1) .5s;*/
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: box-shadow, background-color, transform cubic-bezier(0.075, 0.82, 0.165, 1) .3s;
     }
     
+    #move:hover {
+      box-shadow: 0 0 20px rgba(255, 255, 255, .3);
+      background-color: rgba(0, 0, 0, .15)
+    }
     ul li {
       list-style-type: none;
     }
     
+    a.reset{
+      flex:1;
+      text-decoration: none;
+      position: absolute;
+      color:#fff;
+      background-color: #396;
+      line-height: 50px;
+      text-align: center;
+      width:50px;
+      height:50px;
+      border-radius: 50%;
+      z-index: 2;
+    }
     .cursor-item {
       position: relative;
+      z-index: 1;
     }
     
-    .cursor-item li.cursor {
+    .cursor-item .cursor {
       position: absolute;
       border-radius: 50%;
       background: -webkit-linear-gradient(top, #F63, #696);
       cursor: ew-resize;
-      transition: transform .2s cubic-bezier(0.175, 0.885, 0.32, 1.275) ;
-    }
-    .cursor-item li.cursor:hover{
-      transform: scale(1.1)
-    }
-    .cursor-item li.cursor[data-value="lt"] {
-      left: -10px;
-      top: -10px;
+      transition: transform .2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
     
-    .cursor-item li.cursor[data-value="rt"] {
-      right: -10px;
-      top: -10px;
+    .cursor-item .cursor:hover {
+      animation: rotate 1s forwards infinite;
     }
     
-    .cursor-item li.cursor[data-value="ld"] {
-      left: -10px;
-      bottom: -10px;
-    }
-    
-    .cursor-item li.cursor[data-value="rd"] {
-      right: -10px;
-      bottom: -10px;
+    @keyframes rotate {
+      from {
+        transform: scale(1.2) rotate(0deg)
+      }
+      to {
+        transform: scale(1.2) rotate(360deg)
+      }
     }
   </style>
 </head>
 
 <body>
   <div id="move">
-    <ul class="cursor-item">
-      <li class="cursor" data-value="lt"></li>
-      <li class="cursor" data-value="rt"></li>
-      <li class="cursor" data-value="ld"></li>
-      <li class="cursor" data-value="rd"></li>
-    </ul>
+    <a class="reset" onclick="loadInit()">还原</a>
+    <div class="cursor-item">
+      <span class="cursor" data-value="lt"></span>
+      <span class="cursor" data-value="rt"></span>
+      <span class="cursor" data-value="ld"></span>
+      <span class="cursor" data-value="rd"></span>
+    </div>
   </div>
 
   <script>
-    const LEFT_TOP = "lt"
-    const LEFT_DOWN = "ld"
-    const RIGHT_TOP = "rt"
-    const RIGHT_DOWN = "rd"
+    //方向配置
+    const [LEFT_TOP,LEFT_DOWN,RIGHT_TOP,RIGHT_DOWN] = ["lt","ld","rt","rd"]
+    //框框大小配置
+    const [width,height] = [200,200];
+    //远点大小配置
+    const [cursorWidth,cursorHeight] = [20,20];
 
-    const width = 300;
-    const height = 300;
-    const cursorWidth = 20;
-    const cursorHeight = cursorWidth;
-
-    const cursorConfig = ( width )=>( {
-      [LEFT_TOP]:{
-        left: `-${width/2}px`,
-        top:`-${width/2}px`,
-        right:"0",
-        bottom:"0"
+    const cursorConfig = (width) => ({
+      [LEFT_TOP]: {
+        left: `-${width / 2}px`,
+        top: `-${width / 2}px`
       },
-      [LEFT_DOWN]:{
-        left: `-${width/2}px`,
-        bottom:`-${width/2}px`,
-        top:"0",
-        right:"0"
+      [LEFT_DOWN]: {
+        left: `-${width / 2}px`,
+        bottom: `-${width / 2}px`
       },
-      [RIGHT_TOP]:{
-        top: `-${width/2}px`,
-        right:`-${width/2}px`,
-        left:"0",
-        bottom:"0"
+      [RIGHT_TOP]: {
+        top: `-${width / 2}px`,
+        right: `-${width / 2}px`,
       },
-      [RIGHT_DOWN]:{
-        right: `-${width/2}px`,
-        bottom:`-${width/2}px`,
-        left:"0",
-        top:"0"
+      [RIGHT_DOWN]: {
+        right: `-${width / 2}px`,
+        bottom: `-${width / 2}px`
       }
     })
 
-    var $ =  (element, all = false)=> { return all ? document.querySelectorAll(element) : document.querySelector(element) }
-    window.onload = () => {
+    const $ = (element, all = false) => { return all ? document.querySelectorAll(element) : document.querySelector(element) }
+
+    function loadInit() {
+      init({ ele: $("#move"), width, height, cursorWidth, cursorHeight });
+    }
+    window.onload = loadInit
+    window.addEventListener('resize', loadInit)
+    function init(config = {
+      ele: $('#move')
+    }) {
+      const {ele, width, height, cursorWidth, cursorHeight} = config;
       move_init({
-        ele: $("#move"),
-        width: width,
-        height: height,
-        cursorWidth:cursorWidth,
-        cursorHeight:cursorHeight,
-      });
-      drop({
-        ele: $("#move")
+        ele,
+        width,
+        height,
+        cursorWidth,
+        cursorHeight
+      })(cursorConfig);
+      drop_init({
+        ele,
       })
     }
-    function drop(options = {}) {
+    function drop_init(options = {}) {
       let isDown = false;
       let items = Array.from($('.cursor', true));
 
@@ -155,22 +167,14 @@
             moveHeight = ~~(e.pageY - currenY)
             moveX = ~~(e.pageX - offsetX)
             moveY = ~~(e.pageY - offsetY)
-            if (e.pageX < currenX && type == LEFT_TOP) {
-              setMoveElementOffset(moveBox, moveX, moveY)
-              setMoveElementWH(moveBox, moveWidth)
-            }
+
+            setMoveElementOffset(moveBox, moveX, moveY) 
+            setMoveElementWH(moveBox, moveWidth,moveHeight,type)
+            setMoveElementWH($('.cursor-item'), moveWidth,moveHeight, type)
           }
         })
         item.addEventListener('mouseup', (e) => {
           e.stopPropagation();
-          isDown = false;
-        })
-        item.addEventListener('mouseleave', (e) => {
-          e.preventDefault()
-          isDown = false;
-        })
-        item.addEventListener('mouseup', (e) => {
-          e.preventDefault()
           isDown = false;
         })
         item.addEventListener('mouseout', (e) => {
@@ -184,32 +188,31 @@
       var deafultConfig = {
         width: 100,
         height: 100,
-        cursorWidth:20,
-        cursorHeight:20,
+        cursorWidth: 20,
+        cursorHeight: 20,
         align: "center"
       }
-      // var options = {
-      //   ...deafultConfig,
-      //   config
-      // }
       var options = Object.assign({}, deafultConfig, config)
-      const {ele, align, width, height,cursorWidth,cursorHeight} = options;
-      ele.style.width = `${width}px`;
-      ele.style.height = `${height}px`;
+      const {ele, align, width, height, cursorWidth, cursorHeight} = options;
+      ele.style.width = $('.cursor-item').style.width = `${width}px`;
+      ele.style.height = $('.cursor-item').style.height = `${height}px`;
       align == "center" && autoCenter(ele)
 
-      function initConfig(){
-        $('.cursor-item').style.width = `${width}px`
-        $('.cursor-item').style.height = `${height}px`
-        Array.from($(".cursor",true)).map(item=> {
+      move(ele)
+
+      //设置四个圈圈的大小和位置
+      return function initCursorPosition(cursorConfig) {
+        Array.from($(".cursor", true)).map(item => {
           item.style.width = `${cursorWidth}px`
           item.style.height = `${cursorHeight}px`
           const type = item.getAttribute('data-value');
-          cursorConfig(width)
+          const {left, top, right, bottom} = cursorConfig(cursorWidth)[type];
+          item.style.left = left
+          item.style.top = top
+          item.style.right = right
+          item.style.bottom = bottom
         })
-     }
-     initConfig()
-      move(ele)
+      }
     }
 
     function move(ele) {
@@ -237,7 +240,7 @@
         e.preventDefault()
         isMove = false;
       })
-      ele.addEventListener('mouseleave', (e) => {
+      ele.addEventListener('mouseout', (e) => {
         e.preventDefault()
         isMove = false;
       })
@@ -269,10 +272,9 @@
       ele.style.transform = `translate3d(${~~left}px,${~~top}px,0)`
     }
     //设置拖拽框的大小
-    function setMoveElementWH(ele, width, height) {
-      width && (ele.style.width = `${ele.scrollWidth - width}px`)
-      // width && (ele.style.width = `${ele.style.width - width}px`)
-      height && (ele.style.height = `${ele.scrollWidth - height}px`)
+    function setMoveElementWH(ele, width, height,type) {
+      width && (ele.style.width = `${Math.max((ele.scrollWidth - (type === RIGHT_TOP ? Math.abs(width) : width) ), cursorWidth)}px`)
+      height && (ele.style.height =  `${Math.max((ele.scrollHeight - (type === RIGHT_TOP ? Math.abs(height) : height) ), cursorHeight)}px`)
     }
     //垂直居中
     function autoCenter(ele) {
@@ -297,7 +299,7 @@
       })
     }
 
-    function initConfig(){
+    function initConfig() {
       $('.cursor-item').style.width = `${width}px`
       $('.cursor-item').style.height = `${height}px`
       $(".cursor-item li.cursor").style.width = `${cursorWidth}px`;

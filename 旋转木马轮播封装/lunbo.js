@@ -1,6 +1,7 @@
 /**
  * Created by Administrator on 2016/5/10.
  */
+
 (function($){
     var Carousel = function(element,setting){
         this.element= element;
