@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>postMessage 跨页面跨域传输消息</title>
+</head>
+<body>
+    <div>
+        <iframe src="http://localhost:8080/testPostMessage.html" frameborder="0"></iframe>
+    </div>
+</body>
+<script>
+    window.onload = ()=>{
+        window.frames[0].postMessage('test','http://localhost:8080/testPostMessage.html')
+    }
+</script>
+</html>
