@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>HTML5 api drag 拖放</title>
+    <style>
+        div {
+            width: 200px;
+            height: 100px;
+        }
+
+        .drap {
+            margin: 20px 0;
+            border: 1px dashed #444
+        }
+
+        .drap::backdrop {
+            border: 1px solid red;
+        }
+
+        .drag {
+            background: #396;
+            cursor: move;
+        }
+
+        .img {
+            width: 440px;
+            height: 440px;
+            border: 1px solid #ccc;
+            margin: 30px;
+        }
+
+        .hight {
+            width: 440px;
+            height: 440px;
+            margin: 30px;
+            border: 1px solid red
+        }
+    </style>
+</head>
+
+<body>
+    <h2>将方块拖进虚线框</h2>
+    <div class="drap" ondragover="stop(event)"></div>
+    <div class="drag" id="drag" draggable="true"></div>
+
+    <div class="img" ondragover="stop(event)">
+        <span>拖一张图片进来</span>
+    </div>
+</body>
+<script>
+    /**
+    ondragstart 事件：当拖拽元素开始被拖拽的时候触发的事件，此事件作用在被拖曳元素上
+    ondragenter 事件：当拖曳元素进入目标元素的时候触发的事件，此事件作用在目标元素上
+    ondragover 事件：拖拽元素在目标元素上移动的时候触发的事件，此事件作用在目标元素上
+    ondrop 事件：被拖拽的元素在目标元素上同时鼠标放开触发的事件，此事件作用在目标元素上
+*/
+    const $ = (s) => document.querySelector(s)
+    //这个时候会发现没有效果 原因是要设置 dragover 结束时间 把默认行为组织掉
+    //默认地，无法将数据/元素放置到其他元素中。如果需要设置允许放置，我们必须阻止对元素的默认处理方式。
+    function stop(e) {
+        e.preventDefault()
+    }
+    //开始拖动
+    $('.drag').addEventListener('dragstart', (e) => {
+        //将当前的id 保存到 dataTransfer
+        console.log('22');
+        e.dataTransfer.setData('DIV', e.target.id)
+    })
+
+    //有元素进入了这个范围
+    $('.drap').addEventListener('drop', (e) => {
+        console.log(111);
+        e.preventDefault()
+        //拿到之前设置的
+        const id = e.dataTransfer.getData('DIV')
+        e.target.appendChild($(`#${id}`))
+    })
+
+    const img = $('.img')
+    //进入
+    img.addEventListener('dragenter', (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        console.log(e);
+        img.className = "hight"
+    }, false)
+    //离开
+    img.addEventListener('dragleave', (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        img.className = "img"
+    }, false)
+    //移动
+    img.addEventListener('dragover', (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        e.dataTransfer.dropEffect = 'copy'        //设置文件放置类型为拷贝
+    }, false)
+
+    //放下
+    img.addEventListener('drop', (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        const files = Array.from(e.dataTransfer.files)
+        console.log(Array.from(files));
+        files.forEach((v,i)=>{
+            let photo = document.createElement('img')
+            photo.file = v
+            img.appendChild(photo)
+            const reader = new FileReader()
+            reader.onload = (e)=>{
+                photo.src = e.target.result
+            }
+            reader.readAsDataURL(v)
+        })
+    })
+
+</script>
+
+</html>
