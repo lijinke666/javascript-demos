@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        textarea{
+            width:400px;
+            height:300px;
+        }
+    </style>
+</head>
+<body>
+    <textarea class="text">
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <meta http-equiv="X-UA-Compatible" content="ie=edge">
+            <title>你有本事把我保存为网页</title>
+        </head>
+        <body>
+            <h2>保存成功,666</h2>
+        </body>
+        </html>
+    </textarea>
+    <button>保存文本为网页</button>
+</body>
+<script>
+    const btn = document.querySelector('button')
+    const text = document.querySelector('textarea')
+
+    btn.onclick = function(){
+        const a = document.createElement('a')
+        a.download = "demo.html"
+        //把文本框的 文字保存为二进制
+        const blob = new Blob([text.value])
+        //然后 利用 URL.createObjectUrl(二进制数据) 生成一个连接
+        a.href = URL.createObjectURL(blob)
+        a.click()
+    }
+</script>
+</html>
