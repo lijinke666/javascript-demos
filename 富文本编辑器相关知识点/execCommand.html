@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>execCommand</title>
+    <style>
+            #root {
+            height: 400px;
+            border: 1px solid #dcdcdc;
+        }
+    </style>
+</head>
+<body>
+    <div id="root" contenteditable="true">
+        李金珂66666666666666666666666666666666666
+    </div>
+    <button class="btn1">加粗</button>
+    <button class="btn2">增大字体</button>
+    <button class="btn3">改变字体</button>
+    <button class="btn4">红色字体</button>
+    <button class="btn5">转换成H1标题</button>
+</body>
+<script>
+    //document.execCommand 对当前活动元素 执行一些骚操作  富文本编辑器  啥子加粗  斜体 插入一张图片 都可以基于此实现
+    // document.execCommand('backColor',false,'red')
+
+    const $ = (id) => document.querySelector(id)
+    let isBold = false
+    let fontSize = 12
+
+    const btn1 = $('.btn1')
+    const btn2 = $('.btn2')
+    const btn3 = $('.btn3')
+    const btn4 = $('.btn4')
+    const btn5 = $('.btn5')
+
+
+    btn1.addEventListener('click',()=>{
+        const select = window.getSelection()
+        if(select.rangeCount > 0){
+            document.execCommand("Bold",false,null)
+            isBold = !isBold
+            btn1.innerHTML = isBold ? '取消加粗' : '加粗'
+        }
+    })
+
+    btn2.addEventListener('click',()=>{
+        const select = window.getSelection()
+        if(select.rangeCount > 0){
+            fontSize += 2
+            document.execCommand("fontSize",false,fontSize)
+        }
+    })
+
+    btn3.addEventListener('click',()=>{
+        const select = window.getSelection()
+        if(select.rangeCount > 0){
+            document.execCommand("fontName","false",'Airal')
+        }
+    })
+
+    btn4.addEventListener('click',()=>{
+        const select = window.getSelection()
+        if(select.rangeCount > 0){
+            document.execCommand("foreColor","false",'red')
+        }
+    })
+
+    btn5.addEventListener('click',()=>{
+        const select = window.getSelection()
+        if(select.rangeCount > 0){
+            document.execCommand("formatBlock","false",'H1')
+        }
+    })
+</script>
+</html>
