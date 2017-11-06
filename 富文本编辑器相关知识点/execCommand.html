@@ -28,7 +28,7 @@
 
     const $ = (id) => document.querySelector(id)
     let isBold = false
-    let fontSize = 12
+    let fontSize = 1
 
     const btn1 = $('.btn1')
     const btn2 = $('.btn2')
@@ -47,11 +47,13 @@
     })
 
     btn2.addEventListener('click',()=>{
-        const select = window.getSelection()
-        if(select.rangeCount > 0){
-            fontSize += 2
-            document.execCommand("fontSize",false,fontSize)
-        }
+        fontSize+=1
+        document.execCommand("fontSize",false,fontSize)
+        // const select = window.getSelection()
+        // if(select.rangeCount > 0){
+        //     fontSize += 2
+        //     document.execCommand("fontSize",false,fontSize)
+        // }
     })
 
     btn3.addEventListener('click',()=>{
