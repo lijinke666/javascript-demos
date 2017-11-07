@@ -21,6 +21,7 @@
     <button class="btn3">改变字体</button>
     <button class="btn4">红色字体</button>
     <button class="btn5">转换成H1标题</button>
+    <button class="btn6">插入一张图片</button>
 </body>
 <script>
     //document.execCommand 对当前活动元素 执行一些骚操作  富文本编辑器  啥子加粗  斜体 插入一张图片 都可以基于此实现
@@ -35,6 +36,7 @@
     const btn3 = $('.btn3')
     const btn4 = $('.btn4')
     const btn5 = $('.btn5')
+    const btn6 = $('.btn6')
 
 
     btn1.addEventListener('click',()=>{
@@ -57,22 +59,27 @@
     btn3.addEventListener('click',()=>{
         const select = window.getSelection()
         if(select.rangeCount > 0){
-            document.execCommand("fontName","false",'Airal')
+            document.execCommand("fontName",false,'Airal')
         }
     })
 
     btn4.addEventListener('click',()=>{
         const select = window.getSelection()
         if(select.rangeCount > 0){
-            document.execCommand("foreColor","false",'red')
+            document.execCommand("foreColor",false,'red')
         }
     })
 
     btn5.addEventListener('click',()=>{
         const select = window.getSelection()
         if(select.rangeCount > 0){
-            document.execCommand("formatBlock","false",'H1')
+            document.execCommand("formatBlock",false,'H1')
         }
+    })
+        btn6.addEventListener('click',()=>{
+
+            document.execCommand("insertHTML",false,'<img src="./big.jpg"/>')
+        
     })
 </script>
 </html>
