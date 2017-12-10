@@ -1,4 +1,7 @@
 function arrayDistinct(targetArray) {
+    if(!Array.isArray(targetArray)){
+        return targetArray
+    }
     if(targetArray.some((item)=> Object.is(typeof item,"object"))){
         return targetArray
         .map((item) => JSON.stringify(item))
