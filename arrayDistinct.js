@@ -11,15 +11,24 @@ function arrayDistinct(targetArray) {
     return [...new Set(targetArray)]
 }
 
-const testArray = [
-    {id:1,name:"react"},
-    {id:2,name:"vue"},
-    {id:3,name:"angular"},
-    {id:1,name:"react"},
-    {id:2,name:"graphql"},
-]
+const testDistinctArray = {
+    object:{
+        init: [
+            {id:1,name:"react"},
+            {id:1,name:"react"},
+            ['node'],
+            ['node']
+        ],
+        result:[
+            {id:1,name:"react"},
+            ['node'],
+        ]
+    },
+    stringOrNumber:{
+        init:["1","1",2,2],
+        result:["1",2]
+    }
+}
 
 
-console.log(arrayDistinct(testArray));  
-console.log(arrayDistinct([1,2,3]));
-console.log(arrayDistinct([[1,2],[1,2]]));
+console.log(arrayDistinct(testDistinctArray.object.init));  
