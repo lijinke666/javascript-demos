@@ -1,3 +1,7 @@
+/**
+ * @name 冒泡排序
+ * @param {*} arr 
+ */
 function bubbleSort(arr){
   var i = 0,
       j = 0;
