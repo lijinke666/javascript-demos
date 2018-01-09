@@ -22,6 +22,8 @@
     <button class="btn4">红色字体</button>
     <button class="btn5">转换成H1标题</button>
     <button class="btn6">插入一张图片</button>
+    <button class="btn7">添加文本到剪贴板</button>
+    <input type="" class="text" value="我是文本123">
 </body>
 <script>
     //document.execCommand 对当前活动元素 执行一些骚操作  富文本编辑器  啥子加粗  斜体 插入一张图片 都可以基于此实现
@@ -82,6 +84,12 @@
 
             document.execCommand("insertHTML",false,'<img src="./big.jpg"/>')
         
+    })
+    $('.btn7').addEventListener('click',()=>{
+        const inp = $('.text')
+        inp.value = $('#root').innerText
+        inp.select()
+        document.execCommand('Copy')
     })
 </script>
 </html>
