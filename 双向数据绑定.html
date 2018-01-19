@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> Object.defineProperty()双向数据绑定</title>
+</head>
+
+<body>
+    <input type="text" id="a">
+    <span id="b"></span>
+</body>
+<script>
+    window.onload = () => {
+        let obj = {};
+        Object.defineProperty(obj, 'hello', {
+            set(val) {
+                document.getElementById("a").value = val;
+                document.getElementById("b").innerHTML = val;
+            }
+        });
+        document.addEventListener("keyup", (e)=> {
+            obj.hello = e.target.value
+        })
+    }
+</script>
+
+</html>
