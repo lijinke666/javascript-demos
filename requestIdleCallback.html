@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>requestIdleCallback</title>
+</head>
+<body>
+    <p>
+        window.requestIdleCallback()会在浏览器空闲时期依次调用函数， 这就可以让开发者在主事件循环中执行后台或低优先级的任务，而且不会对像动画和用户交互这样延迟触发而且关键的事件产生影响。函数一般会按先进先调用的顺序执行，除非函数在浏览器调用它之前就到了它的超时时间。
+    </p>
+</body>
+<script>
+    console.time('test')
+    const now = Date.now()
+    while (Date.now()< now + 3000) {
+    }
+    console.timeEnd('test')
+
+    console.time('test1');
+    window.requestIdleCallback((timeRemaining,didTimeout)=>{
+        console.log(timeRemaining);
+        console.log(timeRemaining.didTimeout);
+        console.log(didTimeout);
+    },{
+        
+    })
+    console.log('同步');
+    console.timeEnd('test1');
+
+</script>
+</html>
