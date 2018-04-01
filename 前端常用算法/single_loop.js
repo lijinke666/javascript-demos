@@ -14,24 +14,41 @@
  * [3,4]
 */
 
+
+const teams = ['湖人', '火箭', '凯尔特人']
+//轮次 队伍-1
+const loopLength = teams.length - 1
 //i=1  第一个队伍不动 逆时针循环
 
-const loopSort = (teams) => {
+const loopSort = (teams,loopLength, teamSize = 2) => {
     let temp = 0
     const result = []
-    for (let i = 1; i < teams.length; i++) {
-        for (let j = 0; j <= teams.length - j; j++) {
-            temp = teams[j]
-            teams[j] = teams[j + 1]
-            teams[j + 1] = temp
-            result.push([teams[j+1],teams[j]])
+    const len = teams.length
+    const isOdd = !(len % 2 === 0)
+    //如果是奇数队
+    if(isOdd){
+        teams.push('无对手')
+    }
+    for (let k = 1; k <= loopLength; k++) {
+        for (let i = 1; i < len; i++) {
+            for (let j = 0; j <= len - j; j++) {
+                temp = teams[j]
+                teams[j] = teams[j + 1]
+                teams[j + 1] = temp
+            }
         }
+        const currentTeams =  Array.from({ length: Math.ceil(len / teamSize) }, (v, index) => {
+            return teams.slice(index * teamSize, index * teamSize + teamSize)
+        })
+        result.push(...currentTeams)
+
+        // console.log(currentTeams);
     }
     return result
 }
 
-const teams = [1, 2, 3, 4]
 
-const result = loopSort(teams)
+const result = loopSort(teams,loopLength,2)
 
 console.log(result);
+
