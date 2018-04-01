@@ -15,7 +15,8 @@
 */
 
 
-const teams = ['湖人', '火箭', '凯尔特人']
+const oddTeams = ['湖人', '火箭', '凯尔特人']
+cosnt evenTeams = ['湖人', '火箭', '凯尔特人','森林狼']
 //轮次 队伍-1
 const loopLength = teams.length - 1
 //i=1  第一个队伍不动 逆时针循环
@@ -48,7 +49,8 @@ const loopSort = (teams,loopLength, teamSize = 2) => {
 }
 
 
-const result = loopSort(teams,loopLength,2)
+const result = loopSort(oddTeams,loopLength,2)
 
 console.log(result);
 
+console.log(loopSort(evenTeams,loopLength,2))
