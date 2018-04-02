@@ -56,7 +56,7 @@ const teamHelper = {
             fightTeams.push(...currentTeams)
         }
         if (isOdd) {
-            return fightTeams.filter(team => !newTeams.includes(false))
+            return fightTeams.filter(team => !team.includes(false))
         } else {
             return this.filterTeams(fightTeams)
         }
