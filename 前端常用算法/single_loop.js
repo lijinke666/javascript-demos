@@ -31,31 +31,32 @@ const teamHelper = {
         if (!Array.isArray(teams) || teams.length <= 1) {
             return teams
         }
+        const newTeams = this.shuffleTeams(teams)
 
         let temp = 0
         const fightTeams = []
-        const len = teams.length             //队伍数量
+        const len = newTeams.length             //队伍数量
         const loopLength = len            //循环轮次 n-1
         const isOdd = !(len % 2 === 0)
         //如果是奇数队
         if (isOdd) {
-            teams.push(false)
+            newTeams.push(false)
         }
         for (let k = 1; k <= loopLength; k++) {
             for (let i = 1; i < len; i++) {
                 for (let j = 0; j <= len - j; j++) {
-                    temp = teams[j]
-                    teams[j] = teams[j + 1]
-                    teams[j + 1] = temp
+                    temp = newTeams[j]
+                    newTeams[j] = newTeams[j + 1]
+                    newTeams[j + 1] = temp
                 }
             }
             const currentTeams = Array.from({ length: Math.ceil(len / fightTeamSize) }, (v, index) => {
-                return teams.slice(index * fightTeamSize, index * fightTeamSize + fightTeamSize)
+                return newTeams.slice(index * fightTeamSize, index * fightTeamSize + fightTeamSize)
             })
             fightTeams.push(...currentTeams)
         }
         if (isOdd) {
-            return fightTeams.filter(team => !team.includes(false))
+            return fightTeams.filter(team => !newTeams.includes(false))
         } else {
             return this.filterTeams(fightTeams)
         }
@@ -64,6 +65,15 @@ const teamHelper = {
         return teams.map(item => JSON.stringify(item))
             .filter((item, idx, arry) => idx === arry.indexOf(item))
             .map(item => JSON.parse(item))
+    },
+    shuffleTeams(teams = []){
+        for(let i= teams.length-1;i>=0;i--){
+            const randomIdx = Math.floor(Math.random()*(i+1))
+            const itemIdx = teams[randomIdx]
+            teams[randomIdx] = teams[i]
+            teams[i] = itemIdx
+        }
+        return teams
     }
 }
 
