@@ -18,39 +18,57 @@
 const oddTeams = ['湖人', '火箭', '凯尔特人']
 cosnt evenTeams = ['湖人', '火箭', '凯尔特人','森林狼']
 //轮次 队伍-1
-const loopLength = teams.length - 1
 //i=1  第一个队伍不动 逆时针循环
 
-const loopSort = (teams,loopLength, teamSize = 2) => {
-    let temp = 0
-    const result = []
-    const len = teams.length
-    const isOdd = !(len % 2 === 0)
-    //如果是奇数队
-    if(isOdd){
-        teams.push('无对手')
-    }
-    for (let k = 1; k <= loopLength; k++) {
-        for (let i = 1; i < len; i++) {
-            for (let j = 0; j <= len - j; j++) {
-                temp = teams[j]
-                teams[j] = teams[j + 1]
-                teams[j + 1] = temp
-            }
+const teamHelper = {
+    /**
+     * @name 分配对战 战队
+     * @param {Array} teams 参赛战队
+     * @param {number} [fightTeam=2] 默认两个队伍对战
+     * @returns fightTeam [[队伍1,队伍2],[队伍3,false]]  false代表无对手 此轮不打
+     */
+    allotfightTeam(teams = [], fightTeamSize = 2) {
+        if (!Array.isArray(teams) || teams.length <= 1) {
+            return teams
         }
-        const currentTeams =  Array.from({ length: Math.ceil(len / teamSize) }, (v, index) => {
-            return teams.slice(index * teamSize, index * teamSize + teamSize)
-        })
-        result.push(...currentTeams)
 
-        // console.log(currentTeams);
+        let temp = 0
+        const fightTeams = []
+        const len = teams.length             //队伍数量
+        const loopLength = len            //循环轮次 n-1
+        const isOdd = !(len % 2 === 0)
+        //如果是奇数队
+        if (isOdd) {
+            teams.push(false)
+        }
+        for (let k = 1; k <= loopLength; k++) {
+            for (let i = 1; i < len; i++) {
+                for (let j = 0; j <= len - j; j++) {
+                    temp = teams[j]
+                    teams[j] = teams[j + 1]
+                    teams[j + 1] = temp
+                }
+            }
+            const currentTeams = Array.from({ length: Math.ceil(len / fightTeamSize) }, (v, index) => {
+                return teams.slice(index * fightTeamSize, index * fightTeamSize + fightTeamSize)
+            })
+            fightTeams.push(...currentTeams)
+        }
+        if (isOdd) {
+            return fightTeams.filter(team => !team.includes(false))
+        } else {
+            return this.filterTeams(fightTeams)
+        }
+    },
+    filterTeams(teams = []) {
+        return teams.map(item => JSON.stringify(item))
+            .filter((item, idx, arry) => idx === arry.indexOf(item))
+            .map(item => JSON.parse(item))
     }
-    return result
 }
 
+const t = teamHelper.allotfightTeam(evenTeams)
+console.log(t);
+console.log(teamHelper.allotfightTeam(oddTeams))
 
-const result = loopSort(oddTeams,loopLength,2)
-
-console.log(result);
-
-console.log(loopSort(evenTeams,loopLength,2))
+module.exports = teamHelper
