@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>copy</title>
+</head>
+
+<body>
+  <button data-url="/big.jpg">复制二维码1</button>
+  <button data-url="/js.jpg">复制二维码2</button>
+
+  <div class="target">粘贴到这里</div>
+</body>
+<script>
+  let targetUrl = ""
+  document.addEventListener('copy', (e) => {
+    if (!!targetUrl) {
+      e.clipboardData.setData('text', targetUrl)
+      e.preventDefault();
+    }
+  });
+
+  document.addEventListener('paste', (e) => {
+    const imgId = e.clipboardData.getData('text')
+    const img = new Image()
+    img.src = targetUrl
+    img.onload = () => {
+      document.querySelector('.target').appendChild(img)
+    }
+  })
+
+  const btns = document.querySelectorAll('button')
+
+  for (let btn of btns) {
+    btn.onclick = () => {
+      const url = btn.getAttribute('data-url')
+      targetUrl = url
+      document.execCommand('copy')
+      alert('复制成功,在任意位置粘贴')
+    }
+  }
+</script>
+
+</html>
