@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>web animation api</title>
+  <style>
+    :root {
+      --color: #396;
+      --width: 100px;
+    }
+
+    .box1 {
+      width: var(--width);
+      height: var(--width);
+      line-height: var(--width);
+      text-align: center;
+      border-radius: 50%;
+      border: 1px solid var(--color);
+    }
+  </style>
+</head>
+
+<body>
+  <input type="color" value="red">
+  <button class="btn">启动动画</button>
+  <div class="box1">赵日天</div>
+</body>
+<script>
+  const $ = selector => document.querySelector(selector)
+
+  $('.btn').addEventListener("click", () => {
+    const color = $('input[type="color"]').value
+    console.log(color);
+
+    //用js 实现 css的动画 在某些值需要用到变量比较有意义
+    //相当于 30%{ opacity:0}
+    const keyframes = [
+      { opacity: 0, offset: 0.3 },
+      { backgroundColor: color, offset: 0.4 },
+      { opacity: 1 },
+      { opacity: 0 }
+    ]
+    const animate = $('.box1').animate(keyframes, {
+      duration: 3000,
+      iterations: Infinity
+    })
+    console.log(animate)
+  })
+</script>
+
+</html>
