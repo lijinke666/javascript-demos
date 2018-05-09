@@ -1,46 +1,12 @@
-const json = [
-  {
-    qid: "1",
-    enable: "Y",
-    question: "小明几岁了",
-    totalPrizePool: "100",
-    startTime: "2018/5/10 14:10",
-    endTime: "2018/5/10 15:10",
-    showTime: "2018/5/10 15:10",
-    answerA: "1",
-    answerB: "2",
-    answerC: "3",
-    answerD: "4",
-    answer: "A"
-  },
-  {
-    qid: "2",
-    enable: "N",
-    question: "今天是不是下雨",
-    totalPrizePool: "100",
-    startTime: "2018/5/10 10:00",
-    endTime: "2018/5/10 22:00",
-    showTime: "2018/5/11 8:00",
-    answerA: "2",
-    answerB: "3",
-    answerC: "4",
-    answer: "B"
-  },
-  {
-    qid: "3",
-    enable: "Y",
-    question: "小红几岁了",
-    totalPrizePool: "100",
-    startTime: "2018/5/10 10:00",
-    endTime: "2018/5/10 22:00",
-    showTime: "2018/5/11 8:00",
-    answerA: "4",
-    answerB: "2",
-    answerC: "3",
-    answer: "C"
-  }
-];
 
+const fs = require('fs')
+const path = require('path')
+const input = 
+JSON.parse(fs.readFileSync(path.resolve(__dirname,"./input.json")).toString())
+/**
+ * @name transJson
+ * @param {Array} json 需要转换的数据
+ */
 const transJson = json => {
   const result = json.reduce(
     (
@@ -58,16 +24,21 @@ const transJson = json => {
       }
     ) => {
       const _answers = Object.keys(answers)
-        .filter(v => v.startsWith("answer"))
-        .map(v => ({ option: v, des: "" }));
+        .filter(v => v.toLocaleLowerCase().startsWith("answer"))
+        .map(v => {
+          const value = v.replace(/^(answer)(\w)/i,(a,b,c)=> `${b}|${c}`)
+          const [des,option] = value.split('|') 
+          return {option,des}
+        });
+        
       const v = {
         qid,
         enable,
         question,
         totalPrizePool,
-        startTime,
-        endTime,
-        showTime,
+        startTime:new Date(startTime),
+        endTime: new Date(endTime),
+        showTime: new Date(showTime),
         answers: _answers,
         answer
       };
@@ -76,7 +47,7 @@ const transJson = json => {
     },
     []
   );
-  return result;
+  return JSON.stringify(result, undefined, 2)
 };
 
-console.log(transJson(json));
+console.log(transJson(input));
