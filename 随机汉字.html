@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <h2></h2>
+  <button>点击生成</button>
+</body>
+<script>
+  //https://cnodejs.org/topic/5af184f10a36e5312d6ece55
+  document.querySelector('button').addEventListener('click',()=>{
+    document.querySelector('h2').innerHTML = create();
+  });
+  const create = ()=> String.fromCodePoint(Math.round(Math.random() * 20901) + 19968)
+</script>
+</html>
