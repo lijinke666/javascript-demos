@@ -23,5 +23,8 @@ const quickSort = (arr) => {
             right.push(arr[i])
         }
     }
-    return quickSort(left).concat([middleArr], quickSort(right))
+    return quickSort(left).concat([middleArr, quickSort(right))
 }
+
+
+console.log(quickSort([1,2,5,3,10,4]));
