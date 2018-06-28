@@ -1,5 +1,5 @@
 /**
- * @name 参入排序
+ * @name 插入排序
  */
 
 const insertSort = (arr = []) => {

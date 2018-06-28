@@ -1,5 +1,5 @@
 /**
- * 递归
+ * @name 递归
  */
 
 const recursion = (num) => {
