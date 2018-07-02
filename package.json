@@ -6,6 +6,9 @@
   "author": "jinke.li <jinke.li@feitian-tech.com>",
   "license": "MIT",
   "scripts": {
-    "start":"browser-sync start --server --files './*.html'"
+    "start": "browser-sync start --server --files './*.html'"
+  },
+  "dependencies": {
+    "@babel/core": "^7.0.0-beta.51"
   }
 }
