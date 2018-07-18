@@ -1,0 +1,294 @@
+@import 'helper';
+
+:local {
+  .container {
+    $leave-animate-time: 4s;
+    $info-animate-time: .65s;
+    $bg-animate-time: .65s;
+
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+
+    &.safari {
+       height: calc(100vh - 68px);
+
+       //iPhoneX tool bar
+       @media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio:3) {
+        height: calc(100vh - 110px)
+      }
+    }
+
+    .wrap {
+      position: absolute;
+      left: 0;
+      top:0;
+      height: 90%;
+      color: #fff;
+      font-size: px2rem(32px);
+      text-align: center;
+      width: 100%;
+      opacity: 0;
+      background-color: #e4e2dd;
+      transition: transform .4s cubic-bezier(.17, .17, .48, 1);
+      transform: translateY(120%);
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center px2rem(-50px);
+      box-shadow: 0 px2rem(2px) px2rem(20px) rgba(0, 0, 0, .15);
+
+      &.perfume {
+        background-size: 160%;
+        background-position-y: 0;
+      }
+
+      &.toggle {
+        transition: none !important;
+        transform: none !important;
+      }
+
+      &.currentCard,
+      &.prevCard,
+      &.nextCard,
+      &.lastCard{
+        opacity:1
+      }
+
+      &.currentCard {
+        transform: translateY(0);
+        z-index: 1;
+      }
+
+      &.prevCard {
+        transform: translateY(-80%);
+        z-index: 0;
+      }
+
+      &.nextCard {
+        transform: translateY(80%);
+        z-index: 2;
+      }
+
+      &.lastCard {
+        transform: translateY(95%);
+        z-index: 3;
+      }
+
+      .info {
+        position: absolute;
+        width: 100%;
+        bottom: 24%;
+        left: 50%;
+        transform: translate3d(-50%, 0, 0);
+
+        .pink {
+
+          .label {
+            &:after {
+              right: 10%;
+            }
+  
+            &:before {
+              left: 4%;
+            }
+          }
+        }
+      }
+
+      .title {
+        font-size: px2rem(24px);
+        line-height: px2rem(31px);
+        letter-spacing: px2rem(5px);
+        margin-bottom: px2rem(20px);
+      }
+
+      .label {
+        font-size: px2rem(28px);
+        line-height: px2rem(23px);
+        letter-spacing: px2rem(5px);
+        position: relative;
+
+        &:after,
+        &:before {
+          content: '';
+          position: absolute;
+          bottom: px2rem(10px);
+          width: px2rem(30px);
+          height: px2rem(1px);
+          background-color: #fff;
+        }
+
+        &:after {
+          right: 6%;
+        }
+
+        &:before {
+          left: 4%;
+        }
+      }
+
+      &.dark_brown {
+        background-position: center px2rem(-185px);
+      }
+
+      &.red {
+        background-position: 52% px2rem(-350px);
+      }
+
+      .title,
+      .label,
+      .presell {
+        opacity: 0;
+      }
+
+      .presell {
+        font-size: px2rem(18px);
+        letter-spacing: px2rem(6px);
+        margin-top: px2rem(33px);
+
+        //iPhoneX
+        @media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio:3) {
+          margin-top: px2rem(40px)
+        }
+      }
+
+      .layer {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+
+      &.currentCard {
+        .title,
+        .label {
+          animation: textZoomIn $info-animate-time cubic-bezier(.17, .67, .48, 1) forwards;
+        }
+
+        .presell {
+          animation: fadeIn $info-animate-time cubic-bezier(.17, .67, .48, 1) forwards;
+        }
+
+        .label {
+          animation-delay: .05s;
+        }
+
+        .icon {
+          animation: showBuyButton $info-animate-time cubic-bezier(.17, .67, .48, 1) forwards;
+        }
+      }
+
+      &:not(.currentCard){
+        &.pink {
+          background-position: center px2rem(-325px);
+        }
+
+        &.dark_brown {
+          background-position: center px2rem(-185px);
+        }
+
+        &.red {
+          background-position: 52% px2rem(-350px);
+        }
+
+        .title {
+          opacity: 1;
+        }
+
+        .info {
+          bottom: initial;
+          transform: translate3d(-50%, px2rem(-32px), 0);
+        }
+      }
+
+      .text {
+        opacity: 1;
+      }
+    }
+
+    @keyframes:local (fadeIn) {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes:local (showBuyButton) {
+      from {
+        transform: translate3d(200%, 0, 0);
+      }
+
+      to {
+        transform: translate3d(0, 0, 0);
+      }
+    }
+
+    @keyframes:local (hideBuyButton) {
+      to {
+        transform: translate3d(200%, 0, 0);
+      }
+    }
+
+    @keyframes:local (resize) {
+      from {
+        opacity: 0;
+        bottom: 70%;
+      }
+
+      to {
+        opacity: 1;
+        bottom: 100%;
+      }
+    }
+
+    @keyframes:local (textZoomIn) {
+      from {
+        opacity: 0;
+        transform: scale3d(.5, .5, .5);
+      }
+
+      to {
+        transform: scale3d(1, 1, 1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes:local (textZoomOut) {
+      to {
+        transform: scale3d(1, 1, 1);
+      }
+    }
+
+    @keyframes:local (leave) {
+      70% {
+        transform: translate3d(0, 0, 0);
+      }
+
+      90% {
+        transform: translate3d(0, 200%, 0);
+      }
+
+      to {
+        bottom: 100%;
+      }
+    }
+
+    @keyframes:local (lastLeave) {
+      70% {
+        transform: translate3d(0, 0, 0);
+      }
+
+      90% {
+        transform: translate3d(0, 180%, 0);
+      }
+
+      to {
+        bottom: 100%;
+      }
+    }
+  }
+}
