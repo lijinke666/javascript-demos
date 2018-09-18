@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>取色器</title>
+  <style>
+    .box {
+      width: 80px;
+      height: 80px;
+      border: 1px solid #dcdcdc;
+    }
+  </style>
+</head>
+<body>
+  <h2>鼠标放到图片上</h2>
+  <canvas id="canvas"></canvas>
+  <div class="box"></div>
+</body>
+<script>
+  const canvas = document.getElementById('canvas')
+  const ctx = canvas.getContext('2d')
+  const box = document.querySelector('.box')
+
+  const img = new Image()
+  img.src = '../big.jpg'
+
+  canvas.width = 768
+  canvas.height = 576
+  img.onload = ()=>{
+    ctx.drawImage(img,0,0, img.width, img.height)
+  }
+
+  canvas.addEventListener('mousemove',(e)=>{
+    const x = event.layerX;
+    const y = event.layerY;
+
+    //获取一像素
+    var {data} = ctx.getImageData(x, y, 1, 1);
+
+    //每一个像素 有 r,g,b,a 构成
+    const [r,g,b] = data
+    const a = data[3] / 255
+
+    const rgba = `rgba(${r},${g},${b},${a})`
+
+    box.style.backgroundColor = rgba
+  })
+</script>
+</html>
