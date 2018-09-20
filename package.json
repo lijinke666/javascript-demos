@@ -9,6 +9,7 @@
     "start": "browser-sync start --server --files './*.html'"
   },
   "dependencies": {
-    "@babel/core": "^7.0.0-beta.51"
+    "@babel/core": "^7.0.0-beta.51",
+    "j-bookmark": "^0.0.1"
   }
 }
