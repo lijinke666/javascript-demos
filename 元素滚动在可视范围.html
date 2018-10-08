@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    div {
+      width: 300px;
+      height: 300px;
+      border: 1px solid #dcdcdc;
+      background-color: #dcdcdc;
+      text-align: center;
+      line-height: 300px;
+    }
+  </style>
+</head>
+
+<body>
+  <button id="btn1">直接显示</button>
+  <button id="btn2">平滑</button>
+  <p style="height:300vh"></p>
+  <div class="div1">div1</div>
+  <div class="div2">div2</div>
+</body>
+<script>
+  document.querySelector('#btn1').addEventListener('click', () => {
+    document.querySelector('.div1').scrollIntoView()
+  })
+
+  document.querySelector('#btn2').addEventListener('click', () => {
+    document.querySelector('.div2').scrollIntoView({
+      behavior:"smooth"
+    })
+  })
+</script>
+
+</html>
