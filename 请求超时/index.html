@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>实现一个简单的请求超时</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  const request = async (url) => {
+    const data = await fetch(
+      url,
+      {
+        method: "GET",
+        mode: "cors"
+      }
+    );
+    return data.json();
+  }
+  const timeout = (duration = 2000) => {
+    return new Promise((res)=>{
+      setTimeout(res,duration)
+    })
+  }
+
+  const bootStrap = (duration) =>   Promise.race([
+    request('https://www.lijinke.cn/api/article/ranking?type=pageView'),
+    timeout(duration).then(()=> {
+      throw new Error('timeout!!')
+    })
+  ])
+
+  bootStrap(10).then(res=> console.log(res)).catch((err)=>{
+    console.log(err);
+  })
+</script>
+
+</html>
