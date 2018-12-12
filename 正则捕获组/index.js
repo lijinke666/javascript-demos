@@ -8,7 +8,8 @@ const ext = url.replace(/.*\.(.*)/,'$1')
 console.log(ext)    //jpg
 
 
-//更直观的  es1028
+//更直观的  es2018
+// ?<名字>
 
 const {groups:{name,ext}} = /(?<name>.*)\.(?<ext>.*)/.exec(url)
 
