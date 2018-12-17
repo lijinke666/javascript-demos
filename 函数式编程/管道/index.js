@@ -15,3 +15,5 @@ const num = pipe(
 )
 
 console.log(num(10))    // => subtract(add(10))  //11
+
+// 10 |> add |> subtract
