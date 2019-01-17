@@ -3,7 +3,7 @@
  * @description 模板 {内容}
  */
 
-const parseSmsTemplate = (template = '') => {
+const parseTemplate = (template = '') => {
   return template
   .replace(
     /(\{)([^\{]+)(\})/g,
@@ -17,5 +17,5 @@ const parseSmsTemplate = (template = '') => {
 const template = '你是一条 {name} 吧!'
 const template2 = '你是一条 {name} 吧! 不对是 {text}!'
 
-console.log(parseSmsTemplate(template));  // 你是一条 {<span class='template'>name</span>} 吧!
-console.log(parseSmsTemplate(template2));  // 你是一条 {<span class='template'>name</span>} 吧! 不对是 {<span class='template'>text</span>}!
+console.log(parseTemplate(template));  // 你是一条 {<span class='template'>name</span>} 吧!
+console.log(parseTemplate(template2));  // 你是一条 {<span class='template'>name</span>} 吧! 不对是 {<span class='template'>text</span>}!
