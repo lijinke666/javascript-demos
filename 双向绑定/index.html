@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="content">
+    <p>name: {{name}}</p>
+    <input type="text" v-model='name'>
+  </div>
+</body>
+<script>
+  const el = document.getElementById('content');
+
+  const template = el.innerHTML;
+
+  const _data = {
+    name: 'mark',
+  }
+
+  //new Proxy(target, handler);
+  let changeName = new Proxy(_data, {
+    set(obj, name, value) {
+      obj[name] = value;
+      render()
+    }
+
+  })
+  render();
+  function render() {
+    el.innerHTML = template.replace(/\{\{\w+\}\}/g, str => {
+      str = str.substring(2, str.length - 2);
+      return _data[str];
+    })
+    Array.from(el.getElementsByTagName('input')).filter(ele => {
+      return ele.getAttribute('v-model');
+    }).forEach(input => {
+      let name = input.getAttribute('v-model');
+      input.value = changeName[name];
+      input.onkeyup = function () {
+        changeName[name] = this.value;
+      }
+    })
+  }
+
+</script>
+
+</html>
