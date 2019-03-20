@@ -17,8 +17,18 @@ Function.prototype.after = function(fn) {
 
 console.log.before(()=>{
   console.log('before....');
-})
+})('log....')
 
 console.log.after(()=>{
-  console.log(111);
+  console.log('after....');
+})('log...')
+
+const fn = () => {
+  console.log('start...');
+}
+
+const f = fn.after(()=>{
+  console.log('after');
 })
+
+f()
