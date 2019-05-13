@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script>
+    window.onload = () => {
+      const { innerHTML: body } = document.querySelector('body')
+      const reg = /^\<(?=[a-z])(?<attr>.*(=*?))((\/)?)\>.*/
+      const rule = ['href','src']
+      const ruleReg = new RegExp(`^(${rule.join('|')})`)
+      const v = "<a test='1' href='test' disabled/>".replace(/^\<(?=[a-z])(?<attr>([^]*)(=*?))((\/)?)\>.*/, (a, b, c) => {
+        const value = c.split(' ') || []
+        return value.reduce((str, v) => {
+          if (ruleReg.test(v)) {
+            str += v
+          }
+          return str
+        }, "")
+      })
+      console.log(v)
+    }
+  </script>
+</head>
+
+<body>
+  <div>
+    <img src="./js.jpg" alt="test">
+    <a href="http://www.lijinke.cn">11111</a>
+  </div>
+  <div onblur="">11</div>
+  <input type="text">
+</body>
+
+</html>
