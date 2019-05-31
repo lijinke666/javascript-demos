@@ -1,6 +1,7 @@
 /**
  * @name 冒泡排序
- * @param {*} arr 
+ * @description 空间复杂度 O(n^2)
+ * @param {*} arr
  */
 function bubbleSort(arr) {
   var i = 0,
@@ -22,12 +23,44 @@ function bubbleSort(arr) {
   return arr;
 }
 
+function optimizeBubbleSort(arr) {
+  var i = 0,
+    j = 0,
+    temp = 0
+  for (i = 1; i < arr.length; i++) {
 
-console.log(bubbleSort([1, 2, 4, 7, 3]));
+    // 优化 默认每一轮都已经排过序
+    let isSorted = true
+
+    for (j = 0; j <= arr.length - i; j++) {
+      // ">" 从小到大排序
+      // "<" 从大到小排序
+      //比较右边的数  如果大于本身 就交换位置
+      if (arr[j] > arr[j + 1]) {
+        //用temp 来保存 之前的数
+        temp = arr[j];
+        arr[j] = arr[j + 1];
+        arr[j + 1] = temp;
+
+        // 交互了位置 所以认为没有排过序
+        isSorted = false
+      }
+    }
+
+    // 如果已经排过序 节约一次
+    if(isSorted) {
+      break
+    }
+  }
+  return arr;
+}
+
+console.log(bubbleSort([1, 2, 4, 7, 3, 10, 11, 20, 3, 6]));
+console.log(optimizeBubbleSort([1, 2, 4, 7, 3, 10, 11, 20, 3, 6]));
 
 /**
- * 
- * @param {*} arr 数组 
+ *
+ * @param {*} arr 数组
  * @param {*} desc true 降序 false 升序
  */
 const mySort = (arr, desc = false) => {
@@ -51,7 +84,7 @@ const mySort = (arr, desc = false) => {
 /**
  * 函数式编程的排序
  * 实现 Array.prototype.sort 一样的效果
- * @param {*} arr 
+ * @param {*} arr
  */
 const sort = (arr, fn) => {
   let [i, j, temp] = [0, 0, 0]
@@ -70,5 +103,4 @@ const sort = (arr, fn) => {
   return arr
 }
 
-const result = sort([1, 3, 2, 5, 4], (a, b) => a > b)
-console.log(result);
+// console.log(sort([1, 3, 2, 5, 4], (a, b) => a > b));
