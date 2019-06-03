@@ -8,7 +8,7 @@ const max = (...num) => {
     return num[0]
   }
   let result = num[0]
-  for(let i = 0; i<= num.length; i++) {
+  for(let i = 1; i< num.length; i++) {
     if(num[i] > result) {
       result = num[i]
     }
