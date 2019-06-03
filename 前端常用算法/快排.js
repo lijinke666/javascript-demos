@@ -1,5 +1,6 @@
 /**
- * 快速排序
+ * @name 快速排序
+ * @description 平均时间复杂度 O(nlogn) 最坏 O(n^2)
  * 算法原理　
  * （1）在数据集之中，选择一个元素作为"基准"（pivot）。
 　　（2）所有小于"基准"的元素，都移到"基准"的左边；所有大于"基准"的元素，都移到"基准"的右边。
@@ -28,3 +29,41 @@ const quickSort = (arr) => {
 
 
 console.log(quickSort([1,2,5,3,10,4]));
+
+
+/**
+ * @name 双边循环
+ * @param {*} arr
+ * @param {*} startIndex  起始下标
+ * @param {*} endIndex    结束下标
+ */
+const quickSort2 = (arr, startIndex, endIndex) => {
+    const pivot = arr[startIndex]
+    let left = startIndex
+    let right = endIndex
+
+    while( left != right ) {
+        // right 指针比较 并左移
+        while(left < right && arr[right] > pivot) {
+            right --
+        }
+
+        while(left < right && arr[left] <= pivot) {
+            left ++
+        }
+
+        // 交换left, right指针对应的 元素
+        if(left < right) {
+            const temp = arr[left]
+            arr[left] = arr[right]
+            arr[right] = temp
+        }
+    }
+
+    arr[startIndex] = arr[left]
+    arr[left] = pivot
+    return arr
+}
+
+
+console.log(quickSort2([1,3,2,10,11],0, 4));
