@@ -19,7 +19,6 @@
     canvas {
       display: block;
       margin: 40px auto;
-      border: 1px solid #444;
     }
   </style>
 </head>
@@ -62,10 +61,42 @@
       }
     }
 
+    //  1. 活细胞周围的细胞数如果小于2个或多于3个则会死亡；（离群或过度竞争导致死亡）
+    //  2. 活细胞周围如果有2或3个细胞可以继续存活；（正常生存）
+    //  3. 死细胞（空格）周围如果恰好有3个细胞则会诞生新的活细胞。（繁殖）
+    calculateDataByRules() {
+      this.nextData = []
+      for (let i = 0; i < this.row; i++) {
+        this.nextData[i] = []
+        for (let j = 0; j < this.col; j++) {
+          var lifeCount = 0; //邻居数
+          if (i != 0 && j != 0)
+              if (this.currentData[i - 1][j - 1]) lifeCount++;  //左上角
+          if (i != 0)
+              if (this.currentData[i - 1][j]) lifeCount++; //上方
+          if (i != 0 && j != this.col - 1)
+              if (this.currentData[i - 1][j + 1]) lifeCount++; //右上角
+          if (j != this.col - 1)
+              if (this.currentData[i][j + 1]) lifeCount++;  //右方
+          if (i != this.row - 1 && j != this.col - 1)
+              if (this.currentData[i + 1][j + 1]) lifeCount++; //右下角
+          if (i != this.row - 1)
+              if (this.currentData[i + 1][j]) lifeCount++; //上方
+          if (i != this.row - 1 && j != 0)
+              if (this.currentData[i + 1][j - 1]) lifeCount++; //左下角
+          if (j != 0)
+              if (this.currentData[i][j - 1]) lifeCount++;  //左方
+          if (lifeCount == 3) this.nextData[i][j] = true;
+          else if (lifeCount == 2) this.nextData[i][j] = this.currentData[i][j];
+          else this.nextData[i][j] = false;
+        }
+      }
+    }
+
     draw() {
       for (let i = 0; i < this.row; i++) {
         for (let j = 0; j < this.col; j++) {
-          if(this.nextData[i][j] === true) {
+          if (this.nextData[i][j] === true) {
             ctx.fillStyle = this.lifeColor
           } else {
             ctx.fillStyle = this.emptyColor
@@ -82,10 +113,22 @@
       this.nextData = []
     }
 
+    clearCanvas() {
+      ctx.clearRect(0,0, canvas.width, canvas.width)
+    }
+
+    startCron() {
+      setInterval(()=>{
+        this.clearCanvas()
+        this.calculateDataByRules()
+        this.draw()
+      }, this.speed)
+    }
+
     init() {
       this.createRandomData()
       this.draw()
-      console.log(this.nextData);
+      this.startCron()
     }
   }
 
