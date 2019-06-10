@@ -64,6 +64,7 @@
     //  1. 活细胞周围的细胞数如果小于2个或多于3个则会死亡；（离群或过度竞争导致死亡）
     //  2. 活细胞周围如果有2或3个细胞可以继续存活；（正常生存）
     //  3. 死细胞（空格）周围如果恰好有3个细胞则会诞生新的活细胞。（繁殖）
+    //  四个对角 需要排除 应该构不成 3x3 然后以当前点 分别找对应的 8 个点 然后统计出现的次数
     calculateDataByRules() {
       this.nextData = []
       for (let i = 0; i < this.row; i++) {
@@ -81,7 +82,7 @@
           if (i != this.row - 1 && j != this.col - 1)
               if (this.currentData[i + 1][j + 1]) lifeCount++; //右下角
           if (i != this.row - 1)
-              if (this.currentData[i + 1][j]) lifeCount++; //上方
+              if (this.currentData[i + 1][j]) lifeCount++; //下方
           if (i != this.row - 1 && j != 0)
               if (this.currentData[i + 1][j - 1]) lifeCount++; //左下角
           if (j != 0)
