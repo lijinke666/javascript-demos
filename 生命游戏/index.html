@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>生命游戏</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      padding: 20px;
+    }
+
+    canvas {
+      display: block;
+      margin: 40px auto;
+      border: 1px solid #444;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="root" />
+</body>
+<script>
+  const canvas = document.querySelector('canvas')
+  canvas.width = 500
+  canvas.height = 500
+  const ctx = canvas.getContext('2d')
+
+  class LifeOfGame {
+    constructor(args = this.getDefaultOptions()) {
+      Object.assign(this, args)
+    }
+
+    getDefaultOptions() {
+      return {
+        row: 49,
+        col: 80,
+        rectSize: 10,
+        speed: 1000,
+        lifeColor: 'red',
+        emptyColor: '#ccc',
+        currentData: [],
+        nextData: [],
+      }
+    }
+
+    createRandomData() {
+      this.currentData = []
+      for (let i = 0; i < this.row; i++) {
+        this.nextData[i] = []
+        for (let j = 0; j < this.col; j++) {
+          const hasLife = Math.random() > 0.8
+          this.nextData[i][j] = hasLife
+        }
+      }
+    }
+
+    draw() {
+      for (let i = 0; i < this.row; i++) {
+        for (let j = 0; j < this.col; j++) {
+          if(this.nextData[i][j] === true) {
+            ctx.fillStyle = this.lifeColor
+          } else {
+            ctx.fillStyle = this.emptyColor
+          }
+          ctx.fillRect(
+            j * this.rectSize + 1,
+            i * this.rectSize + 1,
+            this.rectSize - 1,
+            this.rectSize - 1
+          );
+        }
+      }
+      this.currentData = this.nextData
+      this.nextData = []
+    }
+
+    init() {
+      this.createRandomData()
+      this.draw()
+      console.log(this.nextData);
+    }
+  }
+
+  const game = new LifeOfGame()
+  game.init()
+
+</script>
+
+</html>
