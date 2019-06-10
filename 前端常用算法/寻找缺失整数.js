@@ -21,3 +21,25 @@ const findNumberOfArray = (arr) => {
 const arr = Object.keys(Array.from({ length: 100 }))
 arr.splice(0, 1)
 console.log(findNumberOfArray(arr))     // 100
+
+
+/**
+ *  @description 第二种解法 先算出 1+2+3...+100 累加和, 依次减去数组里的元素,得到的差值就是缺失的整数
+ *  @description 时间复杂度 O(n) 空间复杂度 O(1)
+ */
+const findNumberOfArray2 = (arr) => {
+  const max = Object.keys(Array.from({ length: 100 })).reduce((n, value)=>{
+    n += Number(value)
+    return n
+  },0)
+
+
+  const min = arr.reduce((n, value)=>{
+    n += Number(value)
+    return n
+  },0)
+
+  return max - min
+}
+
+console.log(findNumberOfArray2(arr))
