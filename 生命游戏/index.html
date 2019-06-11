@@ -20,14 +20,26 @@
       display: block;
       margin: 40px auto;
     }
+
+    button {
+      padding: 20px;
+      font-size: 20px;
+      border: 1px solid #444;
+    }
   </style>
 </head>
 
 <body>
+  <button class="start">开始</button>
+  <button class="pause">暂停</button>
+  <button class="reset">重置</button>
   <canvas id="root" />
 </body>
 <script>
-  const canvas = document.querySelector('canvas')
+  const canvas = document.querySelector('#root')
+  const startBtn = document.querySelector('.start')
+  const pauseBtn = document.querySelector('.pause')
+  const resetBtn = document.querySelector('.reset')
   canvas.width = 500
   canvas.height = 500
   const ctx = canvas.getContext('2d')
@@ -35,6 +47,7 @@
   class LifeOfGame {
     constructor(args = this.getDefaultOptions()) {
       Object.assign(this, args)
+      this.timer = null
     }
 
     getDefaultOptions() {
@@ -119,22 +132,41 @@
     }
 
     startCron() {
-      setInterval(()=>{
+      this.timer = setInterval(()=>{
         this.clearCanvas()
         this.calculateDataByRules()
         this.draw()
       }, this.speed)
     }
 
+    pause() {
+      clearInterval(this.timer)
+    }
+
+    start() {
+      this.startCron()
+    }
+
     init() {
       this.createRandomData()
       this.draw()
-      this.startCron()
     }
   }
 
   const game = new LifeOfGame()
   game.init()
+
+  pauseBtn.addEventListener('click',()=>{
+    game.pause()
+  })
+
+  startBtn.addEventListener('click',()=>{
+    game.start()
+  })
+
+  resetBtn.addEventListener('click',()=>{
+    game.init()
+  })
 
 </script>
 
