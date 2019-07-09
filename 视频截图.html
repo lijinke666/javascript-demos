@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="file" />
+    <video src=""></video>
+  </body>
+  <script>
+    const file = document.querySelector('input[type="file"]');
+    const video = document.querySelector("video");
+    const FPS = 15;
+    const videoWidth = 200;
+    const videoHeight = 200;
+    const screenshotType = "image/png";
+
+    file.addEventListener("change", e => {
+      const currentFile = Array.from(file.files)[0];
+      const url = URL.createObjectURL(currentFile);
+      const canvas = document.createElement("canvas");
+      const link = document.createElement("a");
+      const ctx = canvas.getContext("2d");
+      canvas.width = videoWidth;
+      canvas.height = videoHeight;
+      video.src = url;
+      video.onload = () => {
+        URL.revokeObjectURL(url);
+      };
+      video.play();
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      // canvas.toBlob(blob => {
+      //   const src = URL.createObjectURL(currentFile);
+      //   const fileName = `${Date.now()}.jpg`;
+      //   link.href = src;
+      //   link.download = fileName;
+      //   link.click();
+      // }, screenshotType);
+      setTimeout(() => {
+        const src = URL.createObjectURL(currentFile);
+        const fileName = `${Date.now()}.png`;
+        link.href = canvas.toDataURL(screenshotType);
+        link.download = fileName;
+        link.click();
+      }, 1000);
+    });
+  </script>
+</html>
