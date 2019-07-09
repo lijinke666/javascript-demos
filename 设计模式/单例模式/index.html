@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>单例模式</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  const createDiv = () => {
+    const div = document.createElement('div')
+    div.innerHTML = "div"
+    document.body.appendChild(div)
+    return div
+  }
+
+  // 全局 有 3个
+  createDiv()
+  createDiv()
+  createDiv()
+
+
+  const createP = (() => {
+    let flag = false
+    return () => {
+      if (!flag) {
+        const p = document.createElement('p')
+        p.innerHTML = "p"
+        document.body.appendChild(p)
+        flag = true
+      }
+    }
+  })()
+
+  // 利用 闭包的 特性 使其 只有一个 单例
+  createP()
+  createP()
+  createP()
+
+
+  // 通用解决, 如果 _fn 是空 就执行一个函数 然后赋值给 _fn  并且修复 this 指针
+
+  const getSingle = (fn) => {
+    let _fn
+    return (...attr) => _fn || (_fn = fn.apply(this, attr))
+  }
+
+  const proxy = getSingle(createDiv)
+
+  // 只会生成一个 div
+  proxy()
+  proxy()
+  proxy()
+</script>
+
+</html>
