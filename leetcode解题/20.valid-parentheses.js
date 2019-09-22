@@ -67,10 +67,23 @@
  */
 
 const map = {
-  '(': ')', '{', '}', '['
- }
+  '(': ')',
+  ')': '(',
+  '{': '}',
+  '}': '{',
+  '[': ']',
+  ']': '['
+}
 var isValid = function(s) {
-  const group = s.split('').reduce((obj, v) => {
+  let result = false
+  if (!s) {
+    return true
+  }
+  if (s.length % 2 !== 0) {
+    return false
+  }
+  const strings = s.split('')
+  const group = strings.reduce((obj, v) => {
     if (!obj[v]) {
       obj[v] = 1
     } else {
@@ -79,8 +92,39 @@ var isValid = function(s) {
     return obj
   }, {})
 
-  if(Object.keys(group).every((key)=> group[key]))
-  console.log(group)
+  for (let key in group) {
+    if (group[key] === group[map[key]]) {
+      result = true
+    } else {
+      result = false
+    }
+  }
+
+  if (result) {
+    for (let index = 0; index < strings.length / 2; index++) {
+      const element = strings[index]
+      console.log(
+        element,
+        strings[strings.length - index - 1],
+        map[strings[strings.length - index - 1]]
+      )
+      if (
+        element === map[strings[strings.length - index - 1]] ||
+        (strings[index * 2] &&
+          strings[index * 2 + 1] &&
+          strings[index * 2] === map[strings[index * 2 + 1]])
+      ) {
+        result = true
+      } else {
+        console.log(1)
+        result = false
+      }
+    }
+  }
+
+  return result
 }
 
 console.log(isValid('()'))
+// console.log(isValid('([)]'))
+// console.log(isValid('()[]{}'))
