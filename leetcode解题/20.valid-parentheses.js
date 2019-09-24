@@ -92,22 +92,15 @@ var isValid = function(s) {
     return obj
   }, {})
 
-  for (let key in group) {
-    if (group[key] === group[map[key]]) {
-      result = true
-    } else {
-      result = false
-    }
-  }
+  result = Object.keys(group).every((key) => {
+    const open = group[key]
+    const close = group[map[key]]
+    return open === close
+  })
 
   if (result) {
     for (let index = 0; index < strings.length / 2; index++) {
       const element = strings[index]
-      console.log(
-        element,
-        strings[strings.length - index - 1],
-        map[strings[strings.length - index - 1]]
-      )
       if (
         element === map[strings[strings.length - index - 1]] ||
         (strings[index * 2] &&
@@ -125,6 +118,8 @@ var isValid = function(s) {
   return result
 }
 
-console.log(isValid('()'))
+// console.log(isValid('()'))
+// console.log(isValid('[(({})}]'))
 // console.log(isValid('([)]'))
 // console.log(isValid('()[]{}'))
+console.log(isValid('(([]){})'))
