@@ -53,7 +53,7 @@ var strStr = function(haystack, needle) {
   if (haystack === needle || !needle) {
     return 0
   }
-  // 先找到 第一个匹配到 index 再看接下来的所有字符串是否匹配
+  // 先找到 第一个匹配到 index 再看接下来的所有字符串是否 是以 needle 开头的
 
   for (let i = 0; i < haystack.length; i++) {
     if (haystack.charAt(i) === needle.charAt(0)) {
