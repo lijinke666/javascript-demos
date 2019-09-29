@@ -47,5 +47,23 @@
  * @return {number}
  */
 var strStr = function(haystack, needle) {
-  return haystack.indexOf(needle)
+  if (needle.length > haystack.length) {
+    return -1
+  }
+  if (haystack === needle || !needle) {
+    return 0
+  }
+  // 先找到 第一个匹配到 index 再看接下来的所有字符串是否匹配
+
+  for (let i = 0; i < haystack.length; i++) {
+    if (haystack.charAt(i) === needle.charAt(0)) {
+      if (haystack.substr(i, haystack.length).startsWith(needle)) {
+        return i
+      }
+    }
+  }
+
+  return -1
 }
+
+console.log(strStr('hello', 'll'))
