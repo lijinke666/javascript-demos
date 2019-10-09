@@ -61,10 +61,34 @@
  * }
  *
  */
+// /**
+//  * @param {number[]} nums
+//  * @return {number}
+//  */
+// var removeDuplicates = function(nums) {
+//   nums = [...new Set(nums)]
+//   return nums.length
+// }
+
 /**
- * @param {number[]} nums
- * @return {number}
+ * @description FIXME:
+ * 使用快慢指针来记录遍历的坐标。
+  开始时这两个指针都指向第一个数字
+  如果两个指针指的数字相同，则快指针向前走一步
+  如果不同，则两个指针都向前走一步
+  当快指针走完整个数组后，慢指针当前的坐标加1就是数组中不同数字的个数
+ * @param {*} nums
  */
 var removeDuplicates = function(nums) {
-  return [...new Set(nums)].length
+  let slowPoint = 0 // 慢指针
+
+  // 快指针
+  for (let fastPoint = 0; fastPoint < nums.length; fastPoint++) {
+    if (nums[fastPoint] !== nums[slowPoint]) {
+      slowPoint++
+      // 交换两个位置 [1,1,2] => [1,2,1]
+      nums[slowPoint] = nums[fastPoint]
+    }
+  }
+  return slowPoint + 1
 }
