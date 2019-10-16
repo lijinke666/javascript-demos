@@ -62,6 +62,7 @@ var plusOne = function(digits) {
   }
 
   // 上面都不满足 说明是 全为 9 的情况 [9,9,9] 需要进一位 前面补1 即可
+  // 即 [1,0,0,0]
   return [1, ...digits]
 }
 // @lc code=end
