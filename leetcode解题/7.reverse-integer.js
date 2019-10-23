@@ -48,20 +48,20 @@
  * @return {number}
  */
 var reverse = function(x) {
+  if (x == 0) return 0
   const [prefix, n] = String(x)
     .replace(/(-?)(\d*)/, (_, b, c) => [b, c])
     .split(',')
-
-  console.log(prefix, n)
 
   const num = n
     .split('')
     .reverse()
     .join('')
 
-  console.log(prefix + num)
-
-  return Number(prefix + num)
+  const result = Number(prefix + num)
+  if (result < Math.pow(-2, 31) || result > Math.pow(2, 31) - 1) return 0
+  return result
 }
 
 console.log(reverse(1534236469))
+console.log(reverse(120))
