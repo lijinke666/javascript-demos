@@ -69,29 +69,21 @@
  * @param {TreeNode} p
  * @param {TreeNode} q
  * @return {boolean}
- * @description 自己的解法 先将 二叉树 递归转换成 数组 然后比较两个数组即可
+ * @description 递归比较两个树, 先比较左边, 再比较右边
  */
 var isSameTree = function(p, q) {
-  const tree2Array = (tree) => {
-    // 如果没有 left 和 right 说明他是一个叶子节点
-    if (!tree || tree.val === null) {
-      return []
-    }
-    if (!tree.left && !tree.right) {
-      return tree.val
-    }
-    return [tree.val].concat(tree2Array(tree.left), tree2Array(tree.right))
+  // 如果都是 空二叉树
+  if (p === null && q === null) {
+    return true
   }
-  const left = tree2Array(p)
-  const right = tree2Array(q)
-
-  if (left.length !== right.length) {
+  // 一个为空 一个不为空
+  if (p === null || q === null) {
     return false
   }
-
-  return left.every((v, i) => {
-    console.log(v, right[i], typeof v, typeof right[i])
-    return v === right[i]
-  })
+  // 如果每一个子节点 不相同
+  if (p.val !== q.val) {
+    return false
+  }
+  return isSameTree(p.left, q.left) && isSameTree(p.right, q.right)
 }
 // @lc code=end
