@@ -59,7 +59,23 @@
  * @description 检测二叉树是否是对称的
  */
 var isSymmetric = function(root) {
-
-};
+  const isSame = (left, right) => {
+    // 如果根节点 都是空的 那么他们相等
+    if (left === null && right === null) {
+      return true
+    }
+    // 如果一个根节点为空 另外一个不是 那么他们就相等
+    if (left === null || right === null) {
+      return false
+    }
+    // 先比较根节点 是否相同
+    // 再比较叶子节点 是否对称
+    return (
+      left.val === right.val &&
+      isSame(left.left, right.right) &&
+      isSame(left.right, right.left)
+    )
+  }
+  return isSame(root, root)
+}
 // @lc code=end
-
