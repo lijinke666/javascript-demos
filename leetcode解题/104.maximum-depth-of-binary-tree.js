@@ -14,25 +14,25 @@
  * Testcase Example:  '[3,9,20,null,null,15,7]'
  *
  * Given a binary tree, find its maximum depth.
- * 
+ *
  * The maximum depth is the number of nodes along the longest path from the
  * root node down to the farthest leaf node.
- * 
+ *
  * Note: A leaf is a node with no children.
- * 
+ *
  * Example:
- * 
+ *
  * Given binary tree [3,9,20,null,null,15,7],
- * 
- * 
+ *
+ *
  * ⁠   3
  * ⁠  / \
  * ⁠ 9  20
  * ⁠   /  \
  * ⁠  15   7
- * 
+ *
  * return its depth = 3.
- * 
+ *
  */
 
 // @lc code=start
@@ -46,9 +46,16 @@
 /**
  * @param {TreeNode} root
  * @return {number}
+ * @description 二叉树的最大深度 递归遍历 左右两个节点
+ * 发现有节点 就 + 1
+ * 最后比较左右两个节点数即可
  */
 var maxDepth = function(root) {
-    
-};
+  if (!root) {
+    return 0
+  }
+  const left = maxDepth(root.left)
+  const right = maxDepth(root.right)
+  return Math.max(left, right) + 1
+}
 // @lc code=end
-
