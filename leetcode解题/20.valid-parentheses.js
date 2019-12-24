@@ -134,12 +134,15 @@ var isValid = function(s) {
   const stack = []
   for (let i = 0; i < s.length; i++) {
     const current = s[i]
+    // 如果是左括号 就使用 push 入栈
     if (Object.keys(map).includes(current)) {
       stack.push(current)
     } else {
       // 此时当前栈 里面都是 左括号 进 else 的都是 右括号
       // 用左括号 map 对应的 隐射 与 当前 括号比较 如果不相等 则无效
-      const last = stack.pop()
+      const last = stack.pop() // 栈底
+
+      // 如果当前栈底对应的右括号 不等于 当前 这就是一组无效的
       if (map[last] !== current) {
         return false
       }
