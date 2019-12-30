@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+
+    <button class="download">下载</button>
+    <button class="abort">中断</button>
+  </body>
+  <script>
+    var controller = new AbortController()
+    var signal = controller.signal
+
+    var downloadBtn = document.querySelector('.download')
+    var abortBtn = document.querySelector('.abort')
+
+    downloadBtn.addEventListener('click', fetchVideo)
+
+    abortBtn.addEventListener('click', function() {
+      controller.abort()
+      console.log('Download aborted')
+    })
+
+    function fetchVideo() {
+      fetch('../cahce-api/js.jpg', { signal })
+        .then(function(response) {})
+        .catch(function(e) {
+          console.log('error', e.message)
+        })
+    }
+  </script>
+</html>
