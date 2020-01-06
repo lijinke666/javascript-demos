@@ -8,16 +8,9 @@
   </head>
   <body></body>
   <script>
-    document.body.innerHTML = `
-    
-      <ul>
-        <li onclick="someClick(222)()">1</li>
-        <li onclick="someClick(333)()">2</li>
-        <li onclick="someClick(444)()">3</li>
-      </ul>
-    `;
-    const someClick = item => () => {
-      console.log(item);
-    };
+    const blob = new Blob([123])
+    const file = new File([blob], 'name')
+
+    console.log(file)
   </script>
 </html>

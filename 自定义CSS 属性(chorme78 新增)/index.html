@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>CSS.registerProperty</title>
+    <style>
+      div {
+        --ljk: 100px;
+        height: 100px;
+        --ljk-color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div>自定义属性</div>
+  </body>
+  <script>
+    window.CSS.registerProperty({
+      name: '--ljk',
+      syntax: '<length>',
+      inherits: false,
+      initialValue: '200px'
+    })
+
+    window.CSS.registerProperty({
+      name: '--ljk-color',
+      syntax: '<color>',
+      inherits: false,
+      initialValue: 'blue'
+    })
+  </script>
+</html>
