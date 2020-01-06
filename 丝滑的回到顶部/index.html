@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      button {
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+      }
+      div {
+        height: 2000px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>window.scrollTop</h2>
+    <div>1</div>
+    <button>回到顶部</button>
+  </body>
+  <script>
+    const btn = document.querySelector("button");
+    btn.addEventListener("click", () => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    });
+  </script>
+</html>
