@@ -10,3 +10,16 @@ console.log( 1 === "1" )
 // 转换规则：会把字符串转成数字
 
 // 1 == "1" =》 1 == Number("1")
+
+
+console.log( true == "1")
+
+// 转换规则
+
+// true == "1" => Number(true) == "1" => 1 == "1"  true
+
+console.log( true == "13")
+
+// 转换规则
+
+// true == "13" => Number(true) == "13" => 1 == "13"  false
