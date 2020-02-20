@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>拖拽drag</title>
+    <style>
+      .drag-area {
+        width: 500px;
+        height: 300px;
+        border: 1px dashed #ccc;
+        text-align: center;
+        line-height: 300px;
+      }
+
+      .drag-area-highlight {
+        border: 1px dashed #eee !important;
+        background-color: rgba(0, 0, 0, 0.2) !important;
+        transition: border, background-color 0.3s;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="drag-area" draggable>将json拖放到这里</div>
+    <div class="result"></div>
+  </body>
+  <script>
+    const JSON_FILE_TYPE = 'application/json'
+    const $ = (selector) => document.querySelector(selector)
+    const dragArea = $('.drag-area')
+
+    function addDragAreaHighlight() {
+      dragArea.classList.add('drag-area-highlight')
+    }
+
+    function removeDragAreaHighlight() {
+      dragArea.classList.remove('drag-area-highlight')
+    }
+
+    function isValidJSON(fileType) {
+      if (!fileType || fileType !== JSON_FILE_TYPE) {
+        return false
+      }
+      return true
+    }
+
+    function renderJSON(file) {
+      const reader = new FileReader()
+      reader.onprogress = function() {
+        console.log('loading..')
+      }
+      reader.onerror = function() {}
+      reader.onabort = function() {}
+      reader.onload = () => {
+        $('.result').innerHTML = reader.result
+      }
+      reader.readAsText(file) //base64
+    }
+
+    dragArea.addEventListener(
+      'dragenter',
+      (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        addDragAreaHighlight()
+      },
+      false
+    )
+    //离开
+    dragArea.addEventListener(
+      'dragleave',
+      (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        removeDragAreaHighlight()
+      },
+      false
+    )
+    //移动
+    dragArea.addEventListener(
+      'dragover',
+      (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+      },
+      false
+    )
+
+    //放下
+    dragArea.addEventListener(
+      'drop',
+      (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        removeDragAreaHighlight()
+        const file = (e.dataTransfer || e.originalEvent.dataTransfer).files[0]
+        if (!isValidJSON(file.type)) {
+          return alert('请选择正确的json文件')
+        }
+        renderJSON(file)
+      },
+      false
+    )
+  </script>
+</html>
