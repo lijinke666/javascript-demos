@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+  <script>
+    // 浏览器为了性能优化 会把鼠标移动，滚动等事件 合并  在下一帧执行
+    // 如果想得到合成的每一步 可以使用 getCoalescedEvents
+    window.addEventListener('pointermove', (event) => {
+      const events = event.getCoalescedEvents()
+      for (let event of events) {
+        const x = event.pageX
+        const y = event.pageY
+        console.log(event)
+      }
+    })
+  </script>
+</html>

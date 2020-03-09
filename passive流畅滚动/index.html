@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+  <script>
+    document.addEventListener(
+      'touchstart',
+      (event) => {
+        if (event.cancelable) {
+          event.preventDefault() // 如果这里阻止了默认事件
+          console.log(2)
+        }
+        console.log(1)
+        // 浏览器会认为 当前区域 (document) 是 非快速滚动区域
+        // 浏览器合成线程 会发送当前的事件 到主线程 整个过程会造成等待, 会造成滚动卡顿
+        // 而 passive 就是告诉合成线程不要等待 直接开干
+      },
+      { passive: true }
+    )
+  </script>
+</html>

@@ -1,25 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body></body>
+  <script>
+    const fn = () =>
+      new Promise((res, rej) => {
+        rej('error...')
+      })
 
-</body>
-<script>
-  const fn = () => new Promise((res,rej)=>{
-    rej('error...')
-  })
+    // 这里会有个错误 但是我们忘记捕获了
+    fn()
 
-  // 这里会有个错误 但是我们忘记捕获了
-  fn()
-
-  // 可以使用 unhandledrejection 来捕获
-  window.addEventListener('unhandledrejection', (e) => {
-    console.log(e)
-  })
-</script>
+    // 可以使用 unhandledrejection 来捕获
+    window.addEventListener('unhandledrejection', (e) => {
+      console.log(e.reason) // error...
+    })
+  </script>
 </html>
