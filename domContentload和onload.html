@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>dom节点</div>
+  </body>
+  <script>
+    // 等dom节点加载完成后执行
+    window.addEventListener("DOMContentLoaded", () => {
+      console.log("DOMContentLoaded");
+    });
+
+    // 等所有资源加载完毕
+    window.addEventListener("load", () => {
+      console.log("load");
+    });
+  </script>
+</html>
