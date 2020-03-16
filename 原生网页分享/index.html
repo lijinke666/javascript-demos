@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+</body>
+<script>
+  alert(navigator.canShare)
+   navigator.share({
+    title: '李金珂',
+    text: '分享测试',
+    url: 'https://www.lijinke.cn',
+  })
+    .then(() => alert('分享成功'))
+    .catch((error) => alert('分享失败'));
+</script>
+</html>
