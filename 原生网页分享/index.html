@@ -6,16 +6,19 @@
   <title>Document</title>
 </head>
 <body>
-
+  <h2>原生分享功能, 只能通过用户点击事件触发, 且站点是 https</h2>
+  <button>点击分享</button>
 </body>
 <script>
-  alert(navigator.canShare)
-   navigator.share({
-    title: '李金珂',
-    text: '分享测试',
-    url: 'https://www.lijinke.cn',
+  document.querySelector('button').addEventListener('click',() => {
+    alert(navigator.canShare)
+    navigator.share({
+      title: '李金珂',
+      text: '分享测试',
+      url: 'https://www.lijinke.cn',
+    })
+      .then(() => alert('分享成功'))
+      .catch((error) => alert('分享失败'));
   })
-    .then(() => alert('分享成功'))
-    .catch((error) => alert('分享失败'));
 </script>
 </html>
