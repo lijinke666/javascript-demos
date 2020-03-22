@@ -6,6 +6,7 @@ node_modules
 .vscode
 # Folder config file
 Desktop.ini
+.site
 
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
