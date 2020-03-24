@@ -43,8 +43,18 @@ function counter(state = 0, action) {
 
 const store = createStore(counter);
 
-store.subscribe(() => console.log(store.getState()));
+store.subscribe(() => {
+  console.log("11");
+  // store.getState() 通过闭包 拿到 内部的 state
+  console.log(store.getState());
+});
 
+store.subscribe(() => {
+  console.log("22");
+});
+
+// 每次 dispatch 调用 reducer 更新state
+// 然后循环执行 subscribe 的函数
 store.dispatch({ type: COUNTER_ACTIONS.INCREMENT });
 store.dispatch({ type: COUNTER_ACTIONS.INCREMENT });
 store.dispatch({ type: COUNTER_ACTIONS.DECREMENT });
