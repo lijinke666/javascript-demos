@@ -7,6 +7,6 @@ class A {
 
 const a = new A()
 a.#name
-a.#log
+a.#log()
 
 // # 真他妈的丑
