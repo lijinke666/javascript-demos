@@ -42,3 +42,18 @@ function reverseString3(str) {
 console.log(reverseString3('abc')); // cba
 console.log(reverseString3('李金珂')) // 珂金李
 console.log(reverseString3('😃👀')) // 一个emoji占两个字符 所以无效
+
+
+// 第三种 循环
+
+function reverseString4(str) {
+  const strs = Array.from(str)
+  return strs.reduceRight((s, v) => {
+    s += v
+    return s
+  },'')
+}
+
+console.log(reverseString4('abc')); // cba
+console.log(reverseString4('李金珂')) // 珂金李
+console.log(reverseString4('😃👀')) // 一个emoji占两个字符 所以无效
