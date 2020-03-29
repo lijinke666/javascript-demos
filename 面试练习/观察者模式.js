@@ -1,5 +1,4 @@
 function createObserve() {
-  const store = {}
   const listeners = []
   function observe(cb) {
     listeners.push(cb)
