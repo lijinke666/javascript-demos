@@ -15,4 +15,4 @@ function a(n, m, c) {
 const f = curry(a)
 console.log(' f: ',  f(1)(2,3));
 console.log(' ff: ',  f(1)(2)(3));
-console.log(' fff: ',  f(1,2,3));
+console.log(' fff: ', f(1, 2, 3));
