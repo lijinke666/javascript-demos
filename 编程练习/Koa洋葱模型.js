@@ -26,9 +26,7 @@ class Koa {
   compose(middleware) {
     // 利用闭包 维护一个 当前 middleware 的下标 每次+1
     return (ctx) => {
-      let index = -1
       function dispatch(i) {
-        index = i
         const currentMiddleware = middleware[i]
 
         // 处理最后一个middleware的情况
