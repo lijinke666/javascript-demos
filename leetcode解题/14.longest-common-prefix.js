@@ -83,7 +83,9 @@ var longestCommonPrefix = function(strs, result = '') {
 }
 
 // console.log(longestCommonPrefix(['']))
-console.log(longestCommonPrefix(['', 'b']))
+// console.log(longestCommonPrefix(['', 'b']))
 // console.log(longestCommonPrefix(['aca', 'cba']))
-// console.log(longestCommonPrefix(['flower', 'flow', 'flight']))
+console.time('start')
+console.log(longestCommonPrefix(['flower', 'flow', 'flight']))
+console.timeEnd('start')
 // console.log(longestCommonPrefix(['dog', 'racecar', 'car']))
