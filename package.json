@@ -6,10 +6,15 @@
   "author": "jinke.li <jinke.li@feitian-tech.com>",
   "license": "MIT",
   "scripts": {
-    "start": "browser-sync start --server --files './*.html'"
+    "start": "browser-sync start --server --files './*.html'",
+    "bookmark": "bookmark -p /javascript-demos"
   },
+  "pre-commit": "bookmark",
   "dependencies": {
     "@babel/core": "^7.0.0-beta.51",
-    "j-bookmark": "^0.0.1"
+    "j-bookmark": "^0.2.1"
+  },
+  "devDependencies": {
+    "pre-commit": "^1.2.2"
   }
 }
