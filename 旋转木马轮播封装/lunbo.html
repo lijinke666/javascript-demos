@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>旋转木马轮播封装练习</title>
+    <link rel="stylesheet" href="11.css"/>
+</head>
+<body>
+<div class="main" data-setting='{
+                                  "width":1000,
+                                  "height":270,
+                                  "posterWidth":640
+                                  "posterHeight":27
+                                  "scale":0.9,
+                                  "speed":500,
+                                  "align":"middle"
+                                }'>
+    <div class="btn btn-left"><</div>
+    <ul class="lunbo-ul">
+        <li><a href="#"><img src="images/1.jpg" alt=""/></a></li>
+        <li><a href="#"><img src="images/2.jpg" alt=""/></a></li>
+        <li><a href="#"><img src="images/3.jpg" alt=""/></a></li>
+        <li><a href="#"><img src="images/4.jpg" alt=""/></a></li>
+        <li><a href="#"><img src="images/5.jpg" alt=""/></a></li>
+    </ul>
+    <div class="btn btn-right">></div>
+</div>
+</body>
+<script src="../jquery-1.11.3.js"></script>
+<script src="lunbo.js"></script>
+<script>
+    $(function(){
+//        var Carousel  = new Carousel($(".main"));
+        Carousel.init($(".main"));
+    })
+</script>
+</html>

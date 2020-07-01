@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>跟随鼠标旋转.html</title>
+    <style>
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+      }
+
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .container {
+        width: 200px;
+        height: 200px;
+        border: 1px solid;
+        text-align: center;
+        background: #396;
+        line-height: 200px;
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">1</div>
+  </body>
+  <script>
+    const container = document.querySelector('.container')
+    document.body.addEventListener("mousemove", (e) => {
+      const { x, y } = e;
+      const deltaX = x - window.innerWidth / 2
+      const deltaY = y - window.innerHeight / 2
+      // 1弧度 = 180 / Math.PI
+      const rotate = (180 / Math.PI ) * Math.atan2(deltaX, deltaY)
+
+      container.style.transform = `rotate(${rotate}deg)`
+    });
+  </script>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>放大镜</title>
+    <style>
+        a {
+            display: block;
+        }
+        
+        .big-image-box {
+            width: 200px;
+            height: 200px;
+            background: white;
+            border: 1px solid #cccccc;
+            text-align: center;
+            position: absolute;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            overflow: hidden;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="">
+        <img src="small.jpg" alt="big.jpg" class="small-img">
+    </a>
+    <a href="">
+        <img src="small.jpg" alt="big.jpg" class="small-img2">
+    </a>
+</body>
+<script src="../jquery-1.11.3.js"></script>
+<script src="imageFDJ.js"></script>
+<script>
+    $(function(){
+        $('.small-img').ljkFDJ();
+        $('.small-img2').ljkFDJ({
+            big_image_width:400,
+            big_image_height:400,
+            big_image_offset:40
+        });
+    }) 
+</script>
+
+</html>

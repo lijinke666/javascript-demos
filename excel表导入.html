@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>excel</title>
+</head>
+<body>
+</body>
+<script>
+    var oXL=null;
+    try{
+        oXL = new ActiveXObject("Excel.Application");
+    }catch(e){
+        alert(e.message);
+    }
+    if (oXL == null){
+        alert("创建Excel文件失败，可能是您的计算机上没有正确安装Microsoft Office Excel软件或浏览器的安全级别设置过高！");
+    }else{
+        alert('支持');
+    }
+</script>
+</html>

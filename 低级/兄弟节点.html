@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<h2>
+
+    元素类型    节点类型
+
+    元素          1
+
+    属性          2
+
+    文本          3
+
+    注释          8
+
+    文档          9
+</h2>
+<ul id="u1">
+    <li id="a">javascript</li>
+
+
+
+    <li id="b">jquery</li>
+    <li id="c">html</li>
+</ul>
+<ul id="u2">
+    <li id="d">css3</li>
+    <li id="e">php</li>
+    <li id="f">java</li>
+</ul>
+</body>
+<script>
+    var li = document.getElementsByTagName("li")[0];
+    var nextSibing = li.nextSibling;
+    console.log("li节点名称＝＝＝＝"+li.nodeName);
+    console.log("li节点内容＝＝＝＝"+li.innerHTML);
+    function get_nextSibling(n){
+        var x = n.nextSibling;
+        while( x && x.nodeType!=1){
+            x = n.nextSibling;
+        }
+        return x;
+    }
+
+    var y = get_nextSibling(li);
+    console.log(y);
+
+    function get_prevSibling(n){
+        var p = n.previousSibling;
+        while( p && p.nodeType!=1){
+           p = p.previousSibling;
+        }
+        return y;
+    }
+    var li2 = document.getElementById("b");
+    var prev = get_prevSibling(li2);
+    console.log(prev);
+</script>
+</html>

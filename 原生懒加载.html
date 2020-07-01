@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+      .root {
+        height: 1000px;
+      }
+    </style>
+</head>
+<body>
+  <div class="root">往下滑</div>
+  <img src="./js.jpg" alt="test" loading="lazy">
+</body>
+<script>
+  // 浏览器是否支持原生懒加载
+  /*
+  lazy: is a good candidate for lazy loading.
+  eager: is not a good candidate for lazy loading. Load right away.
+  auto: browser will determine whether or not to lazily load.
+  */
+
+  console.log('loading' in HTMLImageElement.prototype)
+</script>
+</html>

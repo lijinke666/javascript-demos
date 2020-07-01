@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>数组去重</title>
+</head>
+<body>
+<h2>思路：</h2>
+<p>1.创建一个新的数组存放结果</p>
+<p>2.创建一个空对象</p>
+<p>3.for循环时，每次取出一个元素与对象进行对比，如果这个元素不重复，则把它存放到结果数组中，同时把这个元素的内容作为对象的一个属性，并赋值为1，存入到第2步建立的对象中。</p>
+说明：至于如何对比，就是每次从原数组中取出一个元素，然后到对象中去访问这个属性，如果能访问到值，则说明重复。
+</body>
+<script>
+    //ES5
+    Array.prototype.qucong = function(){
+        var res = [];
+        var json = {};
+        for(var i = 0; i < this.length; i++) {
+            if (!json[this[i]]) {
+                res.push(this[i]);
+                json[this[i]] = 1;
+            }
+        }
+        return res;
+    };
+
+    var array = ['你好',1,1,2,2,'你好','gogo'];
+    console.log(array.qucong());
+
+    //ES6
+    //new Set()  不能有重复元素的特性  然后Array.from 转成数组 完美:)
+    const qucong = (arr)=> Array.from(new Set(arr))
+    qucong([1,2,3,1,1,1,45])
+</script>
+</html>

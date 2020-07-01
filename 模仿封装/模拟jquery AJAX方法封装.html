@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>仿 jQuery 封装 AJAX</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Microsoft YaHei";
+        }
+    </style>
+</head>
+<body>
+
+</body>
+<script>
+        var ljkAJAX={
+            ajax:function(options){
+                if(typeof options.type=="undefined"){
+                    options.type="get";
+                }
+                var http;
+                if(window.XMLHttpRequest){
+                    http= new XMLHttpRequest();
+                }else{
+                    http =new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                http.open(options.type,options.url,true);
+                if(options.type=="get"){
+                    http.send(null);
+                }else{
+                    http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+                    http.send(options.data);
+                }
+                http.onreadystatechange=function(){
+                    if(http.readyState==4 && http.status==200){
+                        options.success(http.responseText);
+                    }else{
+                        options.error("错误")
+                    }
+                };
+            },
+
+            isInt:function(obj){
+               var test= /^\+?[1-9][0-9]*$/;
+                if(test.test(obj)){
+                    alert("是正整数");
+                }else{
+                    alert("不是");
+                }
+            }
+        };
+
+window.onload=function(){
+    ljkAJAX.ajax({
+        type:"post",
+        url:"/ajaxTest.do",
+        success:function(data){
+            alert(data);
+        },
+        error:function(errmsg){
+            console.log(errmsg);
+        }
+    });
+}
+
+</script>
+</html>

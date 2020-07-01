@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>运算符</title>
+</head>
+<body>
+
+</body>
+<script>
+    //一元运算符     +a
+
+
+    //二元运算符    a+b
+
+    //三元运算符
+
+    //1.  true ? 1 : 2;
+    var a = true ? 1: 2;
+    console.log(a);      //1
+
+    //2.   ,  逗号运算符  (后一个替换掉前一个)
+    var val = (1,2,3);      //3
+    console.log(val);
+
+    //3.   delete      删除
+    var obj={};
+    obj.x=3;
+    console.log(obj.x);      //3
+    delete obj.x;        //为true时可以使用
+    console.log(obj.x);      //undifend
+
+    //4.   in       判断是否含有
+     window.x=1;
+    console.log('x' in window);       //true
+
+    //5.   instanceof  typeof   判断类型
+    console.log(typeof "typeof");   //string
+    console.log([] instanceof Array); //true
+
+    //6.   new     实例化  原型链
+    function boom(){}
+    boom.prototype.x=1;      //属于对象原型  不是属于对象本身
+    var aa = new boom();
+    console.log(aa.x);        //1
+
+    aa.hasOwnProperty("x");    //false  因为x不是属于对象本身
+    aa.__proto__.hasOwnProperty('x') //true   x属于对象原型
+
+    //this
+    console.log(this) ;   //window;
+    var ShowThis={
+        obj:function(){
+            return this;
+        }
+    }
+    var d=ShowThis.obj();        //ShowThis  对象本身
+    console.log(d);
+
+    //void()
+
+    console.log(void 0);     //undefined
+    console.log(void(0));   //不管void 后面是多少都是 undefined
+
+
+</script>
+</html>

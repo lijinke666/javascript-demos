@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <video src="http://www.w3school.com.cn/i/movie.ogg" controls></video>
+  <button>111</button>
+</body>
+<script>
+  const video = document.querySelector('video')
+  const btn = document.querySelector('button')
+  // 进入画中画的时候
+  video.addEventListener('enterpictureinpicture', (event) => {
+    const pipWindow = event.pictureInPictureWindow;
+    console.log('width:',pipWindow.width);
+    console.log('height:',pipWindow.height);
+  });
+
+  // 在非当前页页面 关闭画中画时
+  video.addEventListener('leavepictureinpicture', function() {
+    console.log('离开');
+  });
+
+  btn.addEventListener('click',()=>{
+    console.log(document.pictureInPictureElement);
+    if (!document.pictureInPictureElement) {
+      video.requestPictureInPicture()
+      .then(()=> {
+        console.log(' 进入画中画');
+      })
+      .catch(error => {
+        // Video failed to enter Picture-in-Picture mode.
+      });
+    } else {
+      document.exitPictureInPicture()
+      .then(()=> {
+        console.log('退出画中画');
+      })
+      .catch(error => {
+        // Video failed to leave Picture-in-Picture mode.
+      });
+    }
+  })
+</script>
+</html>

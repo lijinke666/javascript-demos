@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h2>点击单选框获取当前的value</h2>
+    <input type="radio" value="1" name='t'>1
+    <input type="radio" value="2" name='t'>2
+    <input type="radio" value="3" name='t'>3
+</body>
+<script>
+    const inp = document.querySelectorAll('input')
+    for(let i=0; i<inp.length ; i++){
+        ((v)=>{
+            inp[i].onclick = ()=> alert(v)
+        })(inp[i].value)
+    }
+</script>
+</html>

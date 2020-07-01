@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function S(){}
+    S.prototype.lol = "英雄联盟"
+    function W(){}
+    W.prototype  = S.prototype
+    const _w = new W()
+    console.log(_w.lol);
+    // B
+    class A{
+        constructor(a){
+            this.a = "666"
+        }
+        name(){
+            alert(this.a)
+        }
+    }
+
+    function B(){}
+
+    B.prototype = new A()
+    const _b = new B()
+    _b.name()
+
+
+    //C
+    function T(name){
+        this.name = name
+        this.say = function(){
+            alert(this.name)
+        }
+    }
+    function C(name){
+        T.call(this,name)
+    }
+    const _c = new C('666')
+    _c.say()
+    </script>
+</body>
+</html>

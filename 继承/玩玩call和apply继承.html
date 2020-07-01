@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="test">111</div>
+</body>
+<script>
+    var a = function(  ){
+        this.name = 'jk';
+        this.age = 18;
+    };
+    var b ={};
+    console.log(b);
+    a.call(b);         //b继承a的所有属性
+    console.log(b);  //{'jk',18}
+
+
+    var num = 123;
+    function aa(){
+        console.log(this);
+    }
+    function bb(){
+        console.log(this);
+    }
+    bb(); //window
+    aa();//window.num = 123;  此时的this 是window
+
+    aa.call(bb);
+
+
+    //第二个例子
+    function changeStyle( attr,value ){
+        this.style[attr] = value;
+    }
+    var test = document.getElementById('test');
+//    changeStyle('width','200px')      //此时报错  this指向window  window没有  style属性
+    //此时如果test这个div要调用changeStyle方法可以使用call或者apply
+    changeStyle.call(test,'width','200px');
+    console.log(test.style.width);//200px  此时调用成功
+
+
+    //第三个例子
+    function fartherName(){
+       console.log( this.farther.name );
+    }
+
+    var people1 ={
+        farther:{
+            name:"李金珂"
+        },
+        fartherwho:fartherName
+    };
+    var people2 ={
+        farther:{
+            name:"赵日天"
+        },
+        fartherwho:fartherName
+    };
+    people1.fartherwho();     //李金珂
+    people2.fartherwho();     //赵日天
+
+
+    [people1,people2].map(function(value,i){
+        fartherName.call(value)
+//        value.fartherwho();
+    })
+
+    console.log('==========================')
+    //第四个例子
+    function Hi ( name ) {
+        this.name = name;
+    }
+    Hi.prototype.sayHi = function(){       //Hi  的原型声明一个sayHi方法
+        console.log(`你好${this.name}`)
+    }
+    let H = new Hi('李金科')
+
+
+    function Sex (sex) {
+        this.sex = sex;
+        Hi.call(this,arguments)          //继承 Hi  现在Sex就有 sayHi的方法了
+    }
+    Sex.prototype.saySex = function(){
+        console.log(`我是${this.sex}孩籽`)
+    }
+
+    let S = new Sex('男')
+    H.sayHi();     //你好，李金科
+    S.saySex();    //我是男孩子
+    S.sayHi();
+
+</script>
+</html>

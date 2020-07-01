@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>some 和 every</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    const concubinis = [{
+        name: "周冬雨",
+        age: 18,
+        isBelle: true
+    }, {
+        name: "桂纶镁",
+        age: 18,
+        isBelle: true
+    }, {
+        name: "罗玉凤",
+        age: 99,
+        isBelle: false
+    }]
+
+
+    const pass = concubinis.every(({ age,isBelle }) => (age <= 18 && isBelle))
+    if(pass){
+        alert('爱妃们,随朕入宫!')
+    }else{
+        alert('来人,有刺客!')
+    }
+    const pass2 = concubinis.some(({age,isBelle})=> age>=18 && !isBelle )
+    if(pass2){
+        alert('凤姐我爱你!')
+    }else{
+        alert('就没有比我凤姐美的吗?')
+    }
+
+</script>
+
+</html>

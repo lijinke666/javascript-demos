@@ -1,0 +1,126 @@
+<html>
+<head>
+    <title>旋转的圆圈</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+</head>
+<style>
+    #wuguitu,#wuguitu1{
+        position: relative;
+        width: 1000px;
+        height: 1000px;
+        border: 1px solid red;
+        margin: 50px auto;
+    }
+    .quan{
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        border: 1px solid #e4e4e4;
+        background: red;
+        position: absolute;
+        top: 0;
+        left: 0;
+        text-align: center;
+    }
+    .quan:hover{
+        transform: scale(1.1);
+        -webkit-transition: all .3s linear;
+    }
+    .dayuan{
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        border: 1px solid red;
+        position: absolute;
+        text-align: center;
+
+    }
+</style>
+<body>
+<div id="wuguitu">
+    <div class="quan" >111</div>
+    <div class="quan" >222</div>
+    <div class="quan" >333</div>
+    <div class="quan">444</div>
+    <div class="quan" >555</div>
+    <div class="quan" >666</div>
+    <div class="quan">777</div>
+    <div class="quan" >888</div>
+    <div class="dayuan"></div>
+</div>
+<div id="wuguitu1">
+    <div class="quan" >111</div>
+    <div class="quan" >222</div>
+    <div class="quan" >333</div>
+    <div class="quan">444</div>
+    <div class="quan" >555</div>
+    <div class="quan" >666</div>
+    <div class="quan">777</div>
+    <div class="quan" >888</div>
+    <div class="quan" >888</div>
+    <div class="quan">777</div>
+    <div class="quan" >888</div>
+    <div class="dayuan"></div>
+</div>
+<script src="jquery-1.11.3.js"></script>
+<script>
+(function ($) {
+    $.fn.wugui=function(options){
+        var defaluts={
+            'intervalTime':13,           /*调用时间*/
+            'intervalAngle':3,           /*每次调用的旋转角度*/
+            'extraAngle':.5              /*是否有多圈同时跑的效果，正为后在前，负为前在前(-1--+1)*/
+        };
+        var options= $.extend(defaluts,options);
+        return this.each(function(){
+            console.log(options.intervalTime)
+            var g=0;                       /*判断所转的圈数*/
+            var b=0;                        /*判断还有那些小圈圈没有到达自己应该到的位置*/
+            var $this=$(this);
+            var yuanxin =$this.width()/ 2;            /*获取半径和圆心的长度*/
+            var dayuan=$this.children('.dayuan');
+            var xiaoquan=$this.children(".quan");
+            var xiaoquanLength=xiaoquan.length;          /*获取小圈圈个数*/
+            var xiaoquanWidth=xiaoquan.width()/2;          /*获取小圈圈半径*/
+            var dayuanWidth=dayuan.width()/2;
+            dayuan.eq(0).css({
+                'top': yuanxin - dayuanWidth + "px",
+                'left': yuanxin - dayuanWidth + "px"
+            });
+            var time= setInterval(function(){
+                for(var i=0;i<xiaoquanLength;i++){
+                    var d = options.intervalAngle*(g+i*options.extraAngle);                  /*算出当前所转的位置*/
+                    var c=(360/xiaoquanLength)*i;                                          /*算出每个小圈的应有位置*/
+                    var left = yuanxin + Math.sin(2 * Math.PI / 360 * (d+180)) * (yuanxin-xiaoquanWidth)-xiaoquanWidth;
+                    var top = yuanxin + Math.cos(2 * Math.PI / 360 * (d+180)) * (yuanxin-xiaoquanWidth)-xiaoquanWidth;
+                    if(d>c){                                      /*如果当前位置大于应有位置b+1*/
+                        if(i>=b){
+                            b++;
+                        }
+                    }
+                    if(i>=b){                                        /*用b来判断这个东西到没有到，到了，就不执行，没有就给他定位*/
+                        xiaoquan.eq(i).css({
+                            'left': left + "px",
+                            'top': top + "px"
+                        });
+                    }
+                }
+                g++;
+                if(d==360){
+                    clearInterval(time)
+                }
+            },options.intervalTime)
+        })
+    }
+})(jQuery);
+$(function () {
+    $("#wuguitu").wugui();
+    $("#wuguitu1").wugui({
+        'extraAngle':.3,
+        'intervalTime':10
+    });
+})
+
+</script>
+</body>
+</html>

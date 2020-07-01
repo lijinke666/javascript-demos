@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <textarea cols="30" rows="10"></textarea>
+</body>
+<script>
+  const myObserver = new ResizeObserver(entries => {
+    entries.forEach(entry => {
+      console.log('大小位置', entry.contentRect)
+      console.log('监听的DOM', entry.target)
+    })
+  })
+  myObserver.observe(document.querySelector('textarea'))
+</script>
+
+</html>

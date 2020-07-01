@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .progress {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            background: #396;
+            color: #fff;
+            text-align: center;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>文章标题</h2>
+    <div class="content">
+    </div>
+    <div class="progress">
+        <span>0%</span>
+    </div>
+</body>
+<script>
+    const colum = 100              //创建多少行的段落
+    const $ = (a) => document.querySelector(a)
+
+    window.onload = () => {
+        createTag(colum)
+        const progressELe = $('.progress>span')
+        const article = $('.content')
+        const articleHeight = article.scrollHeight
+        const { y, height } = getRect(article)
+        const vh = getViewHeight()
+        var currentHeight = height - vh
+        window.addEventListener('scroll', () => {
+            const scrollTop = getScrollTop()
+            const progress = (scrollTop - y) / currentHeight
+            if (progress >= 0 && progress <= 1) {
+                progressELe.innerHTML = `${~~((progress * 100).toFixed(2))}%`;
+            } else if (progress < 0) {
+                progressELe.innerHTML = '0%';
+            } else {
+                progressELe.innerHTML = '100%';
+            }
+        })
+
+    }
+
+    function getRect(ele) {
+        const { top } = ele.getBoundingClientRect()
+        return {
+            y: top + getScrollTop(),
+            height: ele.offsetHeight
+        }
+    }
+    function getViewHeight() {
+        return Math.min(document.documentElement.clientHeight, document.body.clientHeight);
+    }
+    function getScrollTop() {
+        return Math.max(document.documentElement.scrollTop, document.body.scrollTop);
+    }
+    function createTag(colum) {
+        const p = $('.content');
+        [...new Array(colum)].forEach((v, i) => {
+            const _p = document.createElement('p')
+            _p.innerText = i+1
+            p.appendChild(_p)
+        })
+    }
+
+</script>
+
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>无标题文档</title>
+</head>
+<body>
+<p>替换节点时,原来的节点里面的所有属性也会被替换掉</p>
+
+<div><b id="oldnode">JavaScript</b>是一个很常用的技术，为网页添加动态效果。</div>
+<a href="javascript:replaceMessage()"> 将加粗改为斜体</a>
+
+<script type="text/javascript">
+    function replaceMessage(){
+        var oldnode = document.getElementById("oldnode");
+        var newnode = document.createElement("i");
+        var textnode = document.createTextNode("JavaScript");
+        newnode.appendChild(textnode);
+        oldnode.parentNode.replaceChild(newnode,oldnode);
+    }
+</script>
+
+</body>
+</html>

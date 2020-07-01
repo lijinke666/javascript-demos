@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+    //url返回刷新
+    (function (){
+        if( navigator.userAgent.indexOf('Android') == -1 ){
+            return;
+        }
+        if(typeof window.sessionStorage == 'undefined'){
+            return alert("浏览器不支持sessionStorage");
+        }
+        if( !window.backreload ){
+            return;
+        }
+
+        var historyObj = JSON.parse(sessionStorage.getItem('history'));
+        if( !historyObj ){
+            historyObj = [];
+        }else{
+            var tempList = [];
+            for( var i=0; i<historyObj.length-1; i++ ){
+                if( historyObj[i] == location.href ){
+                    //如果找到就刷新
+                    sessionStorage.setItem('history',JSON.stringify(tempList));
+                    location.reload();
+                    return;
+                }
+                tempList.push( historyObj[i] );
+            }
+        }
+
+        //添加新页面
+        var href = add_param_to_url('', 'urlkey', (new Date()).valueOf(), true);
+        //history.replaceState('fsdf', '', href);
+        historyObj.push( href );
+        sessionStorage.setItem('history',JSON.stringify(historyObj));
+    })();
+
+    //添加参数到url
+    function add_param_to_url(url, param_name, value, is_return){
+        if( url=='' ){
+            url = location.href;
+        }
+        url = remove_parameter(url, param_name);
+        url += url.indexOf('?')>=0 ? '&'+param_name+'='+value : '?'+param_name+'='+value;
+        if( typeof(is_return)=='undefined' || is_return ){
+            return url;
+        }
+        location.href = url;
+    }
+
+    //删除url的参数
+    function remove_parameter(url, param_name) {
+        var re = new RegExp("(\\?|&)"+param_name+"=[^&]*(&)?","gim");
+        return url.replace(re, function(p0, p1, p2) {
+            return p1 === '?' || p2 ? p1 : '';
+        });
+    }
+</script>
+</html>

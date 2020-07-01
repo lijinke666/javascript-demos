@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js旋转</title>
+    <style>
+        body,ul,li{
+            margin: 0;
+            padding: 0;
+            font-family:"Microsoft YaHei";
+        }
+        #rotateBox{
+            width: 700px;
+            height: 700px;
+            border:1px solid black;
+            margin:70px auto;
+            display: block;
+            position: relative;
+        }
+        li{
+            position: absolute;
+            display: inline-block;
+            width: 70px;
+            height: 70px;
+            background-color: #396;
+            line-height: 70px;
+            border-radius: 50%;
+            color:#FFF;
+            text-align: center;
+            list-style: none;
+            left:0;
+            top:0;
+        }
+    </style>
+</head>
+<body>
+<ul id="rotateBox">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>
+</body>
+<script src="jquery-1.10.2.min.js"></script>
+<script>
+    $(function(){
+        var box = $("#rotateBox");
+        var li = box.children();
+        li.each(function(i){
+            $(this).text("第"+parseInt(i+1)+"个");
+        });
+
+        var rotateCenter = box.width()/2;
+        var liWidth = li.width()/2;
+        console.log("圆心"+rotateCenter);
+        console.log("li的宽度"+liWidth);
+        li.eq(0).css({
+            left:rotateCenter - liWidth+"px",
+            top:rotateCenter  -liWidth+"px"
+        })
+    })
+</script>
+</html>

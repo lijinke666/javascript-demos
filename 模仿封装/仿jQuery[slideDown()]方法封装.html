@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>slideDown()</title>
+    <style>
+        .box{
+            width: 800px;
+            height:200px;
+            background: #ccc;
+            display: none;
+        }
+        .box2{
+            width: 300px;
+            height:300px;
+            background: green;
+        }
+    </style>
+</head>
+<body>
+<div class="box">1111</div>
+<div class="box2"></div>
+</body>
+<script src="jquery-1.11.3.js"></script>
+<script>
+    (function($){
+        $.fn.go=function(){
+            var m = $(this);
+            var height = m.height();
+            var hh =0;
+            m.css({
+                display:"block",
+                height:hh
+            });
+            var set = setInterval(function(){
+                hh+=5;
+                m.css("height",hh);
+                if(hh==height){
+                    clearInterval(set)
+                }
+            },10)
+        };
+
+        $.fn.out=function(){
+            var opacity = 1;
+            var m = $(this);
+           var aa= setInterval(function(){
+               opacity-=0.05;
+                console.log(opacity);
+                m.css("opacity",opacity);
+
+                if(opacity<=0){
+                    clearInterval(aa);
+                }
+
+            },100)
+        }
+    })(jQuery);
+
+
+    $(function(){
+        $(".box").go();
+        $(".box2").out();
+    })
+
+</script>
+</html>

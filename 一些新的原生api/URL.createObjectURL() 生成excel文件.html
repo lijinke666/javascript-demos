@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h2>HTML5 的 <code>download</code> 属性 ,<code>new Blob() 对象</code> <code>URL.createObjectURL()</code> 结合实现文件下载</h2>
+    <a id="down" download="test.csv">下载excel文件</a>
+    <a id="downImg" download="test.png">下载图片</a>
+</body>
+<script>
+    //生成excel文件
+    const down = document.querySelector('#down')
+    const downImg = document.querySelector('#downImg')
+    // \ufeff 解决乱码问题
+    //blob 是二进制的意思
+    const blob = new Blob(['\ufeff123456'],{
+        type:"text/csv,charset=UTF-8"
+    })
+    down.href = URL.createObjectURL(blob)
+
+</script>
+</html>

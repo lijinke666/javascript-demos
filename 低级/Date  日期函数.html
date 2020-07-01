@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        body{
+            font-family: "微软雅黑";
+        }
+    </style>
+</head>
+<body>
+<h2>Date 日期对象</h2>
+日期对象可以储存任意一个日期，并且可以精确到毫秒数（1/1000 秒）。
+<h3>定义一个时间对象</h3> :
+var Udate=new Date();
+注意:使用关键字new，Date()的首字母必须大写。
+使 Udate 成为日期对象，并且已有初始值：当前时间(当前电脑系统时间)。
+<h3>如果要自定义初始值，可以用以下方法</h3>：
+var d = new Date(2012, 10, 1);  //2012年10月1日
+var d = new Date('Oct 1, 2012'); //2012年10月1日
+<h3>返回星期方法</h3>
+getDay() 返回星期，返回的是0-6的数字，0 表示星期天。如果要返回相对应“星期”，通过数组完成，代码如下:
+    var mydate=new Date();//定义日期对象
+    var weekday=["星期日","星期一","星期二","星期三","星期四","星期五","星期六"];
+    //定义数组对象,给每个数组项赋值
+    var mynum=mydate.getDay();//返回值存储在变量mynum中
+    document.write(mydate.getDay());//输出getDay()获取值
+    document.write("今天是："+ weekday[mynum]);//输出星期几
+<h3>返回/设置时间方法</h3>
+get/setTime() 返回/设置时间，单位毫秒数，计算从 1970 年 1 月 1 日零时到日期对象所指的日期的毫秒数。
+如果将目前日期对象的时间推迟1小时，代码如下:
+    var mydate=new Date();
+    document.write("当前时间："+mydate+"<br>");
+    mydate.setTime(mydate.getTime() + 60 * 60 * 1000);
+    document.write("推迟一小时时间：" + mydate);
+
+</body>
+<script>
+    var date= new Date();
+    console.log(date);
+
+    var date2 = new Date("2012/3/15");
+    console.log(date2);
+
+    /*下面这种方法更加严谨*/
+    var date3 = new Date();
+    var year=date3.getFullYear();
+    var month= date3.getMonth();
+    console.log(year);
+    console.log(month);
+    var setyear = date3.setYear(2012);
+    console.log(setyear);
+    var setHours = date3.setHours(1);
+    console.log(setHours);
+
+    var mydate = new Date();
+    var day = mydate.getDay();
+    var weekday=["星期日","星期一","星期二","星期三","星期四","星期五","星期六"];
+    console.log(day);
+    console.log("今天是"+weekday[day]);
+
+    var nowdate = new Date();
+    console.log("当前时间"+nowdate);
+   nowdate.setTime(nowdate.getTime() + 2*60*60*1000);
+    console.log("延迟两小时"+nowdate);
+</script>
+</html>

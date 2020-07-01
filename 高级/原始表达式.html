@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>原始表达式</title>
+</head>
+<body>
+
+</body>
+<script>
+    //数组  对象的初始化表达式
+    var array = [1,2] ;          //相等与　　　　new Array(1,2)
+    var obj = {"x":2};           //相等于     var obj=new Object();  o.x=2  o.y=2;
+
+    //函数表达式
+    var fu = function(){};
+    (function(){})();
+
+    //属性访问表达式
+    var o1=obj.x;
+    var o2=obj["x"];
+
+    //调用表达式
+    fu();
+
+    //对象创建表达式
+    var a = new Date();
+    var b = new Object("1","2");
+    console.log(b);
+
+
+</script>
+</html>

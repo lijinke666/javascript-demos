@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>无标题文档</title>
+</head>
+<body>
+<p id="intro">我的课程</p>
+<ul>
+    <li title="JS">JavaScript</li>
+    <li title="JQ">JQuery</li>
+    <li title="">HTML/CSS</li>
+    <li title="JAVA">JAVA</li>
+    <li title="">PHP</li>
+</ul>
+<h1>以下为li列表title的值,当title为空时，新设置值为"WEB前端技术":</h1>
+<script type="text/javascript">
+    var Lists=document.getElementsByTagName("li");
+    for (var i=0; i<Lists.length;i++)
+    {
+        var text = Lists[i].getAttribute("title");
+
+        document.write(text +"<br>");
+        if(text=="")
+        {
+            Lists[i].setAttribute("title","WEB前端新技术");
+            document.write(Lists[i].getAttribute("title")+"<br/>");
+        }
+    }
+</script>
+</body>
+</html>

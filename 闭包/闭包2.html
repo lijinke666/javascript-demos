@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>闭包的酸爽</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  //1.
+  //set是异步  所以 for同步执行完后i已经是5 
+  for (var i = 0; i < 5; i++) {
+    setTimeout(() => console.log(i), i * 1000)    //5*5
+  }
+
+  //2.
+  //外面嵌套一个块级作用域  让内部始终对外部i 保持引用 
+  for (var i = 0; i < 5; i++) {     //这里写成let  也可以
+    ((i) => {
+      setTimeout(() => console.log(i), i * 1000)    //0 1 2 3 4
+    })(i);
+  }
+
+  //3.
+  //外面嵌套一个块级作用域  内部没对外部i 保持引用 
+  for (var i = 0; i < 5; i++) {
+    (() => {
+      setTimeout(() => console.log(i), i * 1000)    //5*5
+    })(i);
+  }
+
+  //4.
+  //b 始终对a保持引用 所以num一直在内存中 自增
+
+  const a = (num = 0) => () => console.log(++num);
+  const b = a();
+  setInterval(b, 1000)   // 1........1000+
+
+  //5.
+  //setTimeout 异步 在消息队列中排队 ,然后 promise 里面的是同步 所以先执行 2 3 当for循环完
+  //之后 执行res()  触发then() 异步回调 打印 4 最后执行 setTime的 1  为什么会最后执行set?
+  // Promise.then()里面的回调属于 microtask, 会在当前 Event Loop 的最后执行, 而 SetTimeout 内的回调属于 macrotask, 会在下一个 Event Loop 中执行
+  // 2 3 5 4 1
+  setTimeout(()=>console.log(1),0 )
+  new Promise((res)=>{
+    console.log(2)
+    for(var i=0; i<10000; i++){
+      i=== 999 && res()
+    }
+    console.log(3)
+  }).then(()=> console.log(4))
+  console.log(5)
+
+</script>
+
+</html>

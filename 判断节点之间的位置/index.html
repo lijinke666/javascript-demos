@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="a"><div id="c">c</div></div>
+  <div id="b">2</div>
+</body>
+<script>
+  const a = document.querySelector('#a')
+  const b = document.querySelector('#a')
+  const c = document.querySelector('#c')
+
+  const value = b.compareDocumentPosition(a)
+  const value2 = c.compareDocumentPosition(a)
+
+  console.log(value, value === Node.DOCUMENT_POSITION_DISCONNECTED);
+  console.log(value2, value === Node.DOCUMENT_POSITION_DISCONNECTED);
+</script>
+</html>

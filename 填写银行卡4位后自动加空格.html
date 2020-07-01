@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>填写银行卡4位后自动加空格</title>
+</head>
+<body>
+	<input type='text' placeholder="请填写银行卡" id="inp"/>
+</body>
+<script>
+	(function(){
+			var input = document.getElementById('inp');
+			input.onkeyup = function(  ){
+				var val = this.value;
+				if(/\S{5}/.test(val)){          //如果非空格字符超过了5位 才开始替换      \S 查找非空格字符
+					//先替换掉所有空格   \s查找空格字符   
+					//然后 .  查找单个字符  查找第四个个字符  $1  返回正则匹配的内容  意思就是 先匹配四个字符  然后 再加一个空格
+ 					this.value = val.replace(/\s/g,'').replace(/(.{4})/g,'$1 ');
+				}
+				
+			}
+	})();
+</script>
+</html>

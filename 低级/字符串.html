@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>字符串的各种方法</title>
+    <style>
+        body{
+            font-family: "微软雅黑";
+        }
+    </style>
+</head>
+<body>
+<h2>字符串</h2>
+<h3>使用 String 对象的 toUpperCase() 方法来将字符串小写字母转换为大写：</h3>
+var mystr="Hello world!";
+var mynum=mystr.toUpperCase();
+<h3>使用 String 对象的 toLowerCase() 方法来将字符串大写字母转换为小写：</h3>
+var mystr="Hello world!";
+var mynum=mystr.toLowerCase();
+<hr/>
+<h3>返回指定位置的字符</h3>
+charAt() 方法可返回指定位置的字符。返回的字符是长度为 1 的字符串。
+语法:
+stringObject.charAt(index)
+<h5>参数说明</h5>：
+
+注意：1.字符串中第一个字符的下标是 0。最后一个字符的下标为字符串长度减一（string.length-1）。
+2.如果参数 index 不在 0 与 string.length-1 之间，该方法将返回一个空字符串。
+</body>
+<script>
+    var str = "hello world";
+    var toUpperCase = str.toUpperCase();
+    console.log(str+"  "+toUpperCase);
+
+    var str2= "HELLO WORLD";
+    var toLowerCase = str2.toLowerCase();
+    console.log(str2+"  "+toLowerCase);
+
+    /*charAt()返回字符串索引的值   charAt*/
+    var str3 = "fsjkfjskjfksjfksjs !";
+    var charAt = str3.charAt(str3.length-1);
+    console.log("返回某一个索引"+charAt);
+
+    /*indexOf()  检索某一个字符串首次出现的索引,第二个参数从第几个下标开始检索，不写默认从0开始*/
+    var str4 = "ljk";
+    console.log(str4.indexOf("k"));
+
+    /*substring()   截取字符串*/
+    var str5="i love you farther";
+    var sub = str5.substring(2);
+    var sub1 = str5.substring(2,3);          //下标2 到 3
+    console.log(sub);
+    console.log(sub1);
+
+    /*substr()    截取字符串*/
+    var str6= "i love you farther";
+    var sub3 = str6.substr(2);
+    var sub4 = str6.substr(2,3);              //下标2  长度3
+    console.log(sub3);
+    console.log(sub4);
+
+    /*Math.ceil()   向上取整*/
+    console.log("向上取整"+Math.ceil("0.8"));
+
+    /*Math.floor()   向下取整*/
+    console.log("向下取整"+Math.floor("0.8"));
+
+    /*Math.round()   四舍五入*/
+    console.log("四舍五入"+Math.round("0.5"));
+
+</script>
+</html>

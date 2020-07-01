@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>监听dom是否在容器可视范围内</title>
+    <style>
+        body{
+
+        }
+        .root{
+            margin-top: 1000px;
+            width:300px;
+            height:300px;
+            border:1px solid red;
+        }
+    </style>
+</head>
+<body>
+    <div class="root">
+        
+    </div>
+</body>
+<script>
+    const $ = (seletor)=> document.querySelector(seletor)
+
+    const root = $('.root')
+    const io = new IntersectionObserver((entries)=>{
+        console.log(entries); //会触发两次  元素开始可见,元素不可见
+    })
+
+    io.observe(root)
+
+//     time：可见性发生变化的时间，是一个高精度时间戳，单位为毫秒
+// target：被观察的目标元素，是一个 DOM 节点对象
+// rootBounds：根元素的矩形区域的信息，getBoundingClientRect()方法的返回值，如果没有根元素（即直接相对于视口滚动），则返回null
+// boundingClientRect：目标元素的矩形区域的信息
+// intersectionRect：目标元素与视口（或根元素）的交叉区域的信息
+// intersectionRatio：目标元素的可见比例，即intersectionRect占boundingClientRect的比例，完全可见时为1，完全不可见时小于等于0
+
+    
+</script>
+</html>

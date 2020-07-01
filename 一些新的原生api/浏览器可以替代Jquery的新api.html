@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>浏览器可以替代Jquery的新api</title>
+    <style>
+        .hide{
+            opacity: 0;
+            transition:1s;
+        }
+    </style>
+</head>
+<body>
+    <h2>原生js的一些方法</h2>
+    <div class="remove">ele.remove()</div>
+    <div class="prepend">插入 ele.prepend()</div>
+    <div class="before">在元素之前插入 ele.before()</div>
+    <div class="replaceWith"> 我是要被替换掉的</div>
+    <div class="closest">
+        找到最近的一个 a标签
+        <span>11</span>
+        <a>2</a>
+        <span>2</span>
+    </div>
+    <h2>帧动画 requestAnimationFrame  频繁触发的 可以替代 计时器</h2>
+    <div class="hide">requestAnimationFrame</div>
+
+    <h2>只触发一个事件 {once:true} 替代 jquery 的 .one</h2>
+    <button class="once">只能点我一次</button>
+</body>
+<script>
+
+    //http://svgtrick.com/tricks/6c50b6e1296875a145cc61bcd39e0fa4
+
+    const $ = (seletor)=> document.querySelector(seletor)
+
+    window.onload = ()=>{
+        //删除元素
+        $('.remove').remove()
+
+        //插入元素
+        const div = document.createElement('div')
+        div.innerHTML= "我是插入的"
+        $('.prepend').prepend(div)
+
+        // //在元素前插入内容
+        const div2 = document.createElement('div')
+        div2.innerHTML = "我是插入到div之前的"
+        $('.before').before(div)
+
+        //替换
+        // const div3 = document.createElement('div')
+        // div3.innerHTML = "我是被替换的 replaceWith()"
+        // $('.replaceWidth').replaceWith(div3)
+
+        //找到最近的一个元素
+         console.log('最近的',$('.closest').closest('a')); 
+
+         //帧动画
+         const hide = $('.hide')
+         requestAnimationFrame(()=> hide.style.opacity = 1)
+
+         $('.once').addEventListener('click',()=>{
+             alert('你有本事再点我一次!')
+         },{once:true})
+    }
+
+
+
+</script>
+</html>

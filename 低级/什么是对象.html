@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>什么是对象</title>
+    <style>
+        body{
+            font-family: '微软雅黑';
+        }
+    </style>
+</head>
+<body>
+<h2>什么是对象</h2>
+JavaScript 中的所有事物都是对象，如:字符串、数值、数组、函数等，每个对象带有属性和方法。
+<h3>对象的属性</h3>反映该对象某些特定的性质的，如：字符串的长度、图像的长宽等；
+<h3>对象的方法</h3>能够在对象上执行的动作。例如，表单的“提交”(Submit)，时间的“获取”(getYear)等；
+JavaScript 提供多个内建对象，比如 String、Date、Array 等等，使用对象前先定义，如下使用数组对象：
+var objectName =new Array();//使用new关键字定义对象
+或者
+var objectName =[];
+<h3>访问对象属性的语法</h3>
+objectName.propertyName
+如使用 Array 对象的 length 属性来获得数组的长度：
+var myarray=new Array(6);//定义数组对象
+var myl=myarray.length;//访问数组长度length属性
+以上代码执行后，myl的值将是：6
+<h3>访问对象的方法</h3>
+objectName.methodName()
+<h3>如使用string 对象的 toUpperCase() 方法来将文本转换为大写</h3>
+var mystr="Hello world!";//创建一个字符串
+var request=mystr.toUpperCase(); //使用字符串对象方法
+以上代码执行后：HELLO WORLD!
+</body>
+<script>
+    var a = new Array(6);
+    var length= a.length;
+    console.log(length);
+//    var c= a.propertyName;
+//    console.log(c);
+    //使用对象的属性就是不加括号  a.length
+    //使用对象的方法就要加括号    a.toUpperCase();
+
+    var str = "邓芹是一个sb";
+    var toUpperCase= str.toUpperCase();    //字符串转换为大写;
+    console.log(toUpperCase);
+</script>
+</html>

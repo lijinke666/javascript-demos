@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>粘贴图片</title>
+  <style>
+  </style>
+</head>
+<body>
+  <input type="text" placeholder="粘贴图片试试"/>
+</body>
+<script>
+  let input = document.querySelector("input")
+  //粘贴事件
+  input.addEventListener('paste',(e)=>{
+       const clipboardData = e.clipboardData
+       let items = clipboardData.items
+       let types = clipboardData.types || [];      //粘贴的东西的类型
+       
+       for(let item of items){
+         let {kind,type} = item;      //kind 种类 type 格式
+         if(kind.toLocaleLowerCase() =="file" && /^image\/(?=(png|jpeg|gif))/.test(type)){
+           readerImage(item.getAsFile())      //转换成文件
+           break;
+         }
+       }
+
+  })
+
+  function readerImage( file ){
+    const reader = new FileReader();
+    reader.onload =  (e)=>{
+      loadImage(e.target.result).then( img =>{
+        document.body.appendChild(img)
+      }).catch(err=>console.log(err))
+    }
+    reader.readAsDataURL(file)
+  }
+  function loadImage(src){
+    return new Promise((res,rej)=>{
+      let img = new Image();
+      img.src = src;
+      img.onload = ()=>{
+        res(img)
+      }
+      img.onerror = (e)=>{
+        rej(e)
+      }
+    })
+  }
+</script>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      .children {
+        width: 200px;
+        height: 200px;
+        border: 1px solid red;
+      }
+
+      .parent {
+        border: 1px solid green;
+        padding: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="parent">
+      <h2>111</h2>
+      <div class="children">我是子元素,点我没用</div>
+    </div>
+  </body>
+  <script>
+    const parent = document.querySelector(".parent");
+    const children = document.querySelector(".children");
+
+    parent.addEventListener(
+      "click",
+      e => {
+        e.stopPropagation();
+        if (!children.contains(e.target)) {
+          console.log("parent clicked");
+        }
+      },
+      false
+    );
+  </script>
+</html>

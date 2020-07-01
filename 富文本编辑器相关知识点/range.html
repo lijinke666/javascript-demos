@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>range</title>
+    <style>
+        #root {
+            height: 400px;
+            border: 1px solid #dcdcdc;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>获取选中的文字</h2>
+    <div id="root" contenteditable="true">
+        range 对象表示文档的连续范围区域，简单的说就是高亮选区。一个Range的开始点和结束点位置任意，开始点和结束点也可以是一样的（空Range）。最常见的就是用户在浏览器窗口中用鼠标拖动选中的区域
+    </div>
+    选中的文字:
+    <div class="content"></div>
+    <button class="btn1">获取选中区域文字</button>
+    <button class="btn2">清空光标位置</button>
+    <button class="btn3">恢复光标位置</button>
+    <button class="btn4">光标移到文本最后</button>
+</body>
+<script>
+    const $ = (id) => document.querySelector(id)
+
+    const content = $('.content')
+    const root = $('#root')
+    const btn = $('.btn1')
+    const btn2 = $('.btn2')
+    const btn3 = $('.btn3')
+    const btn4 = $('.btn4')
+
+    //获取用户选中内容
+    btn.addEventListener('click', () => {
+        const select = window.getSelection()
+        if (select.rangeCount > 0) {                     //个别浏览器有 多选的情况
+            const t = select.getRangeAt(0)
+            console.log(t);
+            content.innerHTML = t
+        }
+    })
+
+    //光标位置
+    let range = null
+    btn2.addEventListener("click", () => {
+        const select = window.getSelection()
+        range = select.getRangeAt(0)
+        if (range) {
+            select.removeAllRanges()
+        }
+    })
+
+    //光标位置
+    btn3.addEventListener("click", () => {
+        const select = window.getSelection()
+        select.addRange(range)
+    })
+
+    //光标移到文本最后
+    btn4.addEventListener("click", () => {
+
+        root.focus()
+        const select = window.getSelection()
+        select.selectAllChildren(root)
+        select.collapseToEnd()
+    })
+
+</script>
+
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>对象的引用</title>
+</head>
+<body>
+  
+</body>
+<script>
+  let array1 = [1,2,3,4];
+  let array2 = array1;
+  console.log(array1)
+  array2[1] = "他皮任他皮"
+  console.log(array2)
+  console.log(array1)     //array2 是array1  的引用 指针都一样  所以任意一个改了 都会改变
+
+  //对象也是一样
+  const o = {
+    a:1,
+    b:2
+  }
+  console.log(o) 
+  const o2 = o;
+  o2['a'] = '他皮任他皮,我当他瓜皮'
+  console.log(o)     // {a:"他皮任他皮",b:"我当他瓜皮"}
+  console.log(o2);   // {a:"他皮任他皮",b:"我当他瓜皮"}
+  o['a']=1;
+  let o3 = {
+    ...o,
+    b:3
+  }
+  console.log(o3)
+</script>
+</html>
