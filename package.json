@@ -1,13 +1,13 @@
 {
-  "name": "Javascript",
+  "name": "javascript-demos",
   "version": "1.0.0",
   "main": "index.js",
   "repository": "https://github.com/lijinke666/Javascript.git",
-  "author": "jinke.li <jinke.li@feitian-tech.com>",
+  "author": "jinke.li",
   "license": "MIT",
   "scripts": {
     "start": "browser-sync start --server --files './*.html'",
-    "bookmark": "bookmark -p /javascript-demos"
+    "bookmark": "bookmark -p /javascript-demos && git add ."
   },
   "pre-commit": "bookmark",
   "dependencies": {
