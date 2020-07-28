@@ -10,7 +10,7 @@
       }
 
       img {
-        transition: all 0.3s;
+        transition: all 0.1s linear;
       }
     </style>
   </head>
@@ -20,6 +20,8 @@
   <script>
     // https://www.zhangxinxu.com/wordpress/2020/06/mobile-event-touches-zoom-sacle/
     const img = document.querySelector("img");
+    const MAX_ZOOM = 3;
+    const MIN_ZOOM = 0.3;
 
     const store = {
       scale: 1,
@@ -39,10 +41,14 @@
         store.pageX2 = e2.pageX;
         store.pageY2 = e2.pageY;
       }
+
+      // 记住上一次的坐标
+      store.defaultScale = store.scale || 1;
     });
 
     document.addEventListener("touchmove", (e) => {
       if (!store.moveable) {
+        return;
       }
       e.preventDefault();
       const [e1, e2] = e.touches;
@@ -60,9 +66,14 @@
       }
 
       // NOTE: Math.hypot 平方和的平方根
-      const zoom = Math.hypot(e2.pageX - e1.pageX, e2.pageY - e1.pageY);
+      const zoom =
+        Math.hypot(e2.pageX - e1.pageX, e2.pageY - e1.pageY) /
+        Math.hypot(store.pageX2 - store.pageX, store.pageY2 - store.pageY);
       // 限制缩放比例
-      const scale = Math.max(store.defaultScale * zoom, 3);
+      const scale = Math.max(
+        MIN_ZOOM,
+        Math.min(store.defaultScale * zoom, MAX_ZOOM)
+      );
 
       store.scale = scale;
 
