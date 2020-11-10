@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+  <script>
+    const VNode = {
+      type: 'h1',
+      props: {
+        title: 'ljk',
+        children: '李金珂',
+      },
+    };
+
+    function render(element, target) {
+      const node = document.createElement(element.type);
+      node.title = element.props.title;
+      const text = document.createTextNode('');
+      text.nodeValue = element.props.children;
+      node.appendChild(text);
+      target.appendChild(node);
+    }
+
+    const container = document.querySelector('#root');
+
+    render(VNode, container);
+  </script>
+</html>
