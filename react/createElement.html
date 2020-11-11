@@ -14,7 +14,7 @@
     React.render(
       React.createElement(
         'div',
-        null,
+        { onClick: () => alert(1), id: 'test' },
         React.createElement('span', { title: '1' }, 'Hello'),
         React.createElement('span', { title: '2' }, React.createElement('b', null, 'React')),
       ),
