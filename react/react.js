@@ -30,6 +30,10 @@ export function isProperty(key) {
   return key !== 'children';
 }
 
+export function isListener(key) {
+  return key.startsWith('on');
+}
+
 export function render(element, container) {
   const dom = element.type === ELEMENT_TYPE.TEXT ? document.createTextNode('') : document.createElement(element.type);
   const props = element.props || {};
@@ -38,7 +42,13 @@ export function render(element, container) {
   Object.keys(props)
     .filter(isProperty)
     .forEach((attr) => {
-      dom[attr] = props[attr];
+      // 如果是事件, 就挂载在对应的节点上
+      if (isListener(attr)) {
+        const event = attr.replace('on', '').toLowerCase();
+        dom.addEventListener(event, props[attr]);
+      } else {
+        dom[attr] = props[attr];
+      }
     });
 
   // 递归渲染子节点
