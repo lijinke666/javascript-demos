@@ -10,7 +10,25 @@ function throttle(fn, interval) {
   }
 }
 
-const fn = throttle(() => console.log(1), 1000)
+function throttle2(fn, delay) {
+  let lastTime;
+  return (...args) => {
+    const now = Date.now();
+    if (now - lastTime > delay || !lastTime) {
+      fn.apply(this, args);
+      lastTime = now;
+    }
+  };
+}
 
-fn()
-fn()
+
+setInterval(
+  throttle(() => console.log(1), 1000),
+  50,
+);
+
+setInterval(
+  throttle2(() => console.log(2), 1000),
+  50,
+);
+
