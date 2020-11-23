@@ -1,0 +1,11 @@
+function d(a) {
+  console.trace();
+  return a;
+}
+function b(a) {
+  return c(a);
+}
+function c(a) {
+  return d(a);
+}
+let a = b('123');
