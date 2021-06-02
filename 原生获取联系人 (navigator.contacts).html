@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>原生获取联系人 navigator.contacts</title>
+  </head>
+  <body>
+    <button>选择联系人</button>
+  </body>
+  <script>
+    document.querySelector('button').addEventListener('click', async () => {
+      const properties = ['name'];
+      const options = { multiple: true };
+      try {
+        return await navigator.contacts.select(properties, options);
+      } catch (err) {
+        alert(err.name + err.message);
+      }
+    });
+  </script>
+</html>
