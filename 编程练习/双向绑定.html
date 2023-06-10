@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="root">
+      <input type="text" v-model="name" />
+
+    </div>
+  </body>
+  <script>
+    function init(root) {
+
+      const data = {}
+      const proxy = new Proxy(data, {
+        set(target, key, value) {
+          target[key] = value
+        },
+      })
+      const nodes = Array.from(root.children)
+      nodes.forEach((node) => {
+        const model = node.getAttribute('v-model')
+        if (node.tagName.toUpperCase() === 'INPUT' && model) {
+          node.addEventListener('input', () => {
+            proxy[model] = node.value
+          })
+        }
+      })
+    }
+
+    init(root)
+  </script>
+</html>

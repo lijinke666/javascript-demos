@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      html {
+        touch-action: none;
+      }
+
+      img {
+        transition: all 0.1s linear;
+      }
+    </style>
+  </head>
+  <body>
+    <img src="./big.jpg" alt="" />
+  </body>
+  <script>
+    // https://www.zhangxinxu.com/wordpress/2020/06/mobile-event-touches-zoom-sacle/
+    const img = document.querySelector("img");
+    const MAX_ZOOM = 3;
+    const MIN_ZOOM = 0.3;
+
+    const store = {
+      scale: 1,
+      defaultScale: 1,
+      moveable: false,
+    };
+
+    img.addEventListener("touchstart", (e) => {
+      const [e1, e2] = e.touches;
+      store.pageX = e1.pageX;
+      store.pageY = e1.pageY;
+      store.moveable = true;
+      e.preventDefault();
+
+      // 如果是双指
+      if (e2) {
+        store.pageX2 = e2.pageX;
+        store.pageY2 = e2.pageY;
+      }
+
+      // 记住上一次的坐标
+      store.defaultScale = store.scale || 1;
+    });
+
+    document.addEventListener("touchmove", (e) => {
+      if (!store.moveable) {
+        return;
+      }
+      e.preventDefault();
+      const [e1, e2] = e.touches;
+      store.pageX = e1.pageX;
+      store.pageY = e1.pageY;
+
+      // 在touchstart 中 双指会偶尔判断不到 需要在 touchmove判断
+      if (e2) {
+        if (!store.pageX2) {
+          store.pageX2 = e2.pageX;
+        }
+        if (!store.pageY2) {
+          store.pageY2 = e2.pageY;
+        }
+      }
+
+      // NOTE: Math.hypot 平方和的平方根
+      const zoom =
+        Math.hypot(e2.pageX - e1.pageX, e2.pageY - e1.pageY) /
+        Math.hypot(store.pageX2 - store.pageX, store.pageY2 - store.pageY);
+      // 限制缩放比例
+      const scale = Math.max(
+        MIN_ZOOM,
+        Math.min(store.defaultScale * zoom, MAX_ZOOM)
+      );
+
+      store.scale = scale;
+
+      img.style.transform = `scale(${scale})`;
+    });
+
+    document.addEventListener("touchend", () => {
+      resetStore();
+    });
+
+    document.addEventListener("touchcancel", () => {
+      resetStore();
+    });
+
+    function resetStore() {
+      store.moveable = false;
+      store.pageX2 = undefined;
+      store.pageY2 = undefined;
+    }
+  </script>
+</html>

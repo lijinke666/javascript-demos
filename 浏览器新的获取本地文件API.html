@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>File System Access API</title>
+  </head>
+  <body>
+    <button class="select-file">选择文件 (window.showOpenFilePicker)</button>
+    <button class="download-file">下载文件 (window.showSaveFilePicker)</button>
+  </body>
+  <script>
+    const selectFileBtn = document.querySelector('.select-file');
+    const downLoadFileBtn = document.querySelector('.download-file');
+    selectFileBtn.addEventListener('click', async () => {
+      const [handle] = await window.showOpenFilePicker({
+        types: [
+          {
+            description: 'Image files',
+            accept: {
+              'image/*': ['.png', '.jpg', '.jpeg', '.avif', '.webp', '.svg'],
+            },
+          },
+        ],
+      });
+      const file = await handle.getFile();
+      const image = new Image();
+      image.src = URL.createObjectURL(file);
+      document.body.appendChild(image);
+    });
+
+    downLoadFileBtn.addEventListener('click', async () => {
+      const handle = await window.showSaveFilePicker({
+        types: [
+          {
+            // 可以下载任意类型的文件, 默认根据你的 accept 显示名字, 例: 未命名.json
+            description: 'Json 文件',
+            accept: { 'application/json': ['.json'] },
+          },
+        ],
+      });
+      const blob = new Blob([JSON.stringify({ name: 'ljk' })], { type: 'application/json' });
+      const writable = await handle.createWritable();
+      await writable.write(blob);
+      await writable.close();
+    });
+  </script>
+</html>
