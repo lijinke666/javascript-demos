@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>setPointerCapture 实现拖拽</title>
+    <style>
+      div {
+        width: 140px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid;
+        cursor: move;
+        user-select: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="slider">拖我</div>
+  </body>
+  <script>
+    const slider = document.getElementById('slider');
+    const { width, height } = slider.getBoundingClientRect();
+
+    function beginSliding(e) {
+      slider.onpointermove = slide;
+      slider.setPointerCapture(e.pointerId);
+    }
+
+    function stopSliding(e) {
+      slider.onpointermove = null;
+      slider.releasePointerCapture(e.pointerId);
+    }
+
+    function slide(e) {
+      const x = e.clientX - width / 2;
+      const y = e.clientY - height / 2;
+      slider.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+    }
+
+    slider.addEventListener('pointerdown', beginSliding);
+    slider.addEventListener('pointerup', stopSliding);
+  </script>
+</html>
