@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button>select</button>
+  </body>
+  <script type="importmap">
+    {
+      "imports": {
+        "browser-fs-access": "https://unpkg.com/browser-fs-access@0.33.0/dist/index.modern.js"
+      }
+    }
+  </script>
+  <script type="module">
+    import { fileOpen } from 'browser-fs-access';
+
+    const button = document.querySelector('button');
+    button.addEventListener('click', async () => {
+      const file = await fileOpen({
+        // mimeTypes: ['text/plain'],
+      });
+      console.log(await file.text());
+    });
+  </script>
+</html>
