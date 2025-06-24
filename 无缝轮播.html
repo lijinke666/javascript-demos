@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>无线轮播</title>
+    <style>
+      .carousel {
+        width: 500px;
+        overflow: hidden;
+      }
+      .track {
+        display: flex;
+        transition: transform 0.5s ease;
+      }
+      img {
+        width: 500px;
+        flex-shrink: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="carousel">
+      <div class="track">
+        <img src="https://place.dog/300/200" />
+        <!-- 复制的最后一张 -->
+        <img src="https://place.dog/300/200" />
+        <img src="https://place.dog/300/200" />
+        <img src="https://place.dog/300/200" />
+        <img src="https://place.dog/300/200" />
+        <!-- 复制的第一张 -->
+      </div>
+    </div>
+    <script>
+      const track = document.querySelector('.track');
+      const images = document.querySelectorAll('img');
+      const imgWidth = 500;
+      let currentIndex = 1;
+
+      // 初始状态
+      track.style.transform = `translateX(-${imgWidth * currentIndex}px)`;
+
+      function next() {
+        currentIndex++;
+        track.style.transition = 'transform 0.5s ease';
+        track.style.transform = `translateX(-${imgWidth * currentIndex}px)`;
+
+        track.addEventListener('transitionend', () => {
+          if (currentIndex === images.length - 1) {
+            track.style.transition = 'none';
+            currentIndex = 1;
+            track.style.transform = `translateX(-${imgWidth * currentIndex}px)`;
+          }
+        });
+      }
+
+      setInterval(next, 3000);
+    </script>
+  </body>
+</html>
